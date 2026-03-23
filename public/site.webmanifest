@@ -1,0 +1,16 @@
+{
+  "name": "Rihea",
+  "short_name": "Rihea",
+  "description": "Emotional sanctuary during pregnancy.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#fcf9f2",
+  "theme_color": "#9CB0A3",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}
