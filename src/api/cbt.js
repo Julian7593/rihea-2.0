@@ -1,5 +1,5 @@
-import { apiContracts } from "./contracts";
-import { apiRequest, hasRemoteApi } from "./client";
+import { apiContracts } from "./contracts.js";
+import { apiRequest, hasRemoteApi } from "./client.js";
 import {
   buildCbtAssessmentRequest,
   buildCbtHomeworkPatchRequest,

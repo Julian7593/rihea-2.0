@@ -1,4 +1,4 @@
-import { txt } from "./txt";
+import { txt } from "./txt.js";
 
 /**
  * 用户友好的错误消息映射

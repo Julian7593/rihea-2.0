@@ -3,14 +3,14 @@
  * 处理运动相关的API请求
  */
 
-import { apiContracts, apiRequest, hasRemoteApi } from "./client";
+import { apiContracts, apiRequest, hasRemoteApi } from "./client.js";
 import {
   createExerciseRecord,
   getExerciseRecords,
   getTodayExerciseRecords,
   calculateWeeklyStats,
 } from "../utils/recordStorage";
-import { getTodayExerciseQuickView, generateWeeklyExercisePlan } from "../utils/fitnessRecommender";
+import { getTodayExerciseQuickView, generateWeeklyExercisePlan } from "../utils/fitnessRecommender.js";
 
 const wait = (ms = 220) => new Promise((resolve) => setTimeout(resolve, ms));
 

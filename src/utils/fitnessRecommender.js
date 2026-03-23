@@ -9,7 +9,7 @@ import {
   EXERCISE_INTENSITY,
   FITNESS_LEVELS,
 } from "../data/fitnessContent";
-import { normalizeWeekLabel } from "./pregnancy";
+import { normalizeWeekLabel } from "./pregnancy.js";
 
 /**
  * 获取孕期阶段

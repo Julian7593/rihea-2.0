@@ -9,7 +9,7 @@ import {
   BMI_CATEGORIES,
   NUTRITION_STANDARDS,
 } from "../data/nutritionContent";
-import { calcPregnancyWeekByDueDate, normalizeWeekLabel } from "./pregnancy";
+import { calcPregnancyWeekByDueDate, normalizeWeekLabel } from "./pregnancy.js";
 
 /**
  * 计算BMI
@@ -505,9 +505,9 @@ export function generateNutritionAdvice(profile) {
       snack: plan.meals.snack[0] || null,
     },
     nutritionGoals: {
-      calories: plan.nutritionGoals.calories.base,
-      protein: plan.nutritionGoals.protein.min,
-      calcium: plan.nutritionGoals.calcium.min,
+      calories: plan.nutritionGoals?.calories?.base || 2000,
+      protein: plan.nutritionGoals?.protein?.min || 70,
+      calcium: plan.nutritionGoals?.calcium?.min || 1000,
     },
     tips: plan.tips.slice(0, 3),
   };

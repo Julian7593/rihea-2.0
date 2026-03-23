@@ -3,9 +3,9 @@
  * 处理饮食相关的API请求
  */
 
-import { apiContracts, apiRequest, hasRemoteApi } from "./client";
-import { createDietRecord, getDietRecords, getTodayDietRecords } from "../utils/recordStorage";
-import { generateNutritionAdvice } from "../utils/nutritionCalculator";
+import { apiContracts, apiRequest, hasRemoteApi } from "./client.js";
+import { createDietRecord, getDietRecords, getTodayDietRecords } from "../utils/recordStorage.js";
+import { generateNutritionAdvice } from "../utils/nutritionCalculator.js";
 
 const wait = (ms = 220) => new Promise((resolve) => setTimeout(resolve, ms));
 

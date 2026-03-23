@@ -1,5 +1,5 @@
-import { toDateKey } from "./checkin";
-import { assessEmotionalRisk, getRiskLevelConfig } from "./riskAssessment";
+import { toDateKey } from "./checkin.js";
+import { assessEmotionalRisk, getRiskLevelConfig } from "./riskAssessment.js";
 
 export const PARTNER_SYNC_STATUS = {
   DISABLED: "disabled",

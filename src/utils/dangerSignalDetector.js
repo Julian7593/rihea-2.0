@@ -3,8 +3,8 @@
  * 检测饮食和运动记录中的危险信号，及时预警
  */
 
-import { fitnessContent } from "../data/fitnessContent";
-import { useLocalStorage } from "../hooks/useLocalStorage";
+import { fitnessContent } from "../data/fitnessContent.js";
+import { useLocalStorage } from "../hooks/useLocalStorage.js";
 
 /**
  * 危险信号类型
