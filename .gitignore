@@ -3,3 +3,9 @@ dist
 .env
 server/data/*.local.json
 server/kb/*.local.json
+
+# wrangler files
+.wrangler
+.dev.vars*
+!.dev.vars.example
+!.env.example
