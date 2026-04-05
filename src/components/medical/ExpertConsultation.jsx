@@ -1,16 +1,11 @@
 import { useState } from "react";
 import { User, Star, MessageCircle, Phone, Video, Filter, ChevronRight, Calendar } from "lucide-react";
 import Card from "../ui/Card";
-<<<<<<< HEAD
 import { getAllExperts, matchExperts, EXPERT_TYPE_LABELS, EXPERT_TYPES } from "../../data/experts";
-=======
-import { matchExperts, EXPERT_TYPE_LABELS, EXPERT_TYPES } from "../../data/experts";
->>>>>>> 356bd4d38d8b7f31d8a35a177e59ac40d7d6cf8a
 import { assessEmotionalRisk } from "../../utils/riskAssessment";
 import { readCheckIns } from "../../utils/checkin";
 import { txt } from "../../utils/txt";
 
-<<<<<<< HEAD
 export default function ExpertConsultation({ lang, style, pregnancyWeek, riskAssessment: riskAssessmentProp = null }) {
   const [selectedType, setSelectedType] = useState("all");
   const [showFilters, setShowFilters] = useState(false);
@@ -28,21 +23,6 @@ export default function ExpertConsultation({ lang, style, pregnancyWeek, riskAss
       : riskOrderedExperts;
   const recommendedExperts = prioritizedExperts.slice(0, 5);
   const allExperts = fallbackExperts;
-=======
-export default function ExpertConsultation({ lang, style, pregnancyWeek }) {
-  const [selectedType, setSelectedType] = useState("all");
-  const [showFilters, setShowFilters] = useState(false);
-
-  // Get risk assessment to recommend experts
-  const checkIns = readCheckIns();
-  const riskAssessment = assessEmotionalRisk({ checkIns, lang });
-  const recommendedExperts = matchExperts(
-    riskAssessment.level,
-    pregnancyWeek || 24,
-    lang
-  );
-  const allExperts = matchExperts("low", pregnancyWeek || 24, lang);
->>>>>>> 356bd4d38d8b7f31d8a35a177e59ac40d7d6cf8a
 
   // Filter experts
   const filteredExperts = selectedType === "all"

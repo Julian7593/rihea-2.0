@@ -1,28 +1,30 @@
 import { useMemo, useState } from "react";
 import {
-  Activity,
   ArrowRight,
   BookOpen,
   Brain,
   CheckCircle2,
   ClipboardList,
-  Database,
   HeartHandshake,
   HeartPulse,
   Layers3,
   LockKeyhole,
-  Network,
-  ShieldCheck,
   Sparkles,
   Stethoscope,
   UserRound,
   Utensils,
 } from "lucide-react";
+import DocsArchitectureDiagram from "../components/docs/DocsArchitectureDiagram";
+import DocsBackToTopButton from "../components/docs/DocsBackToTopButton";
+import DocsCover from "../components/docs/DocsCover";
+import DocsSectionHeader from "../components/docs/DocsSectionHeader";
+import DocsSectionNav from "../components/docs/DocsSectionNav";
 import Card from "../components/ui/Card";
 import DietAdviceCard from "../components/nutrition/DietAdviceCard";
 import ExerciseAdviceCard from "../components/fitness/ExerciseAdviceCard";
 import { appGuideContent } from "../data/appGuideContent";
 import { appReleaseNotes, appVersionInfo } from "../data/appMeta";
+import useActiveSection from "../hooks/useActiveSection";
 import { generateNutritionAdvice } from "../utils/nutritionCalculator";
 import { getTodayExerciseQuickView } from "../utils/fitnessRecommender";
 
@@ -49,62 +51,14 @@ const navigationIconMap = {
   我的: UserRound,
 };
 
-const architectureCards = [
-  { title: "前端承接层", icon: Layers3, items: appGuideContent.architecture.frontendLayers },
-  { title: "数据与状态层", icon: Database, items: appGuideContent.architecture.dataState },
-  { title: "服务与接口层", icon: Network, items: appGuideContent.architecture.serviceLayer },
-  {
-    title: "安全与模型角色",
-    icon: ShieldCheck,
-    items: [...appGuideContent.architecture.safetyMechanisms, ...appGuideContent.architecture.modelRole],
-  },
-];
-
-const pageSections = [
-  { id: "quick-start", title: "快速开始", desc: "首次使用顺序" },
-  { id: "main-flow", title: "主流程", desc: "完整使用链路" },
-  { id: "navigation", title: "导航协作", desc: "四大导航分工" },
-  { id: "modules", title: "核心模块", desc: "逐项功能说明" },
-  { id: "architecture", title: "技术架构", desc: "前端、数据、Agent" },
-  { id: "ai-mechanism", title: "AI 机制", desc: "为什么是受控回答" },
-  { id: "phase-mapping", title: "阶段判断", desc: "roadmap 映射" },
-  { id: "release-notes", title: "版本说明", desc: "最近版本变化" },
-  { id: "safety-boundary", title: "边界说明", desc: "数据、安全、协作" },
-  { id: "faq", title: "FAQ", desc: "高频外部问题" },
-  { id: "next-step", title: "下一步", desc: "演示与推进建议" },
-];
-
-const deliveryFaqs = [
-  {
-    question: "妊安当前最准确的产品定义是什么？",
-    answer: "当前应表述为“围绕孕期稳态管理构建的受控知识增强型对话助手与陪伴式 APP”，而不是完全自主型多模态智能体。",
-  },
-  {
-    question: "当前 AI 回答为什么不是自由发挥？",
-    answer: "因为链路先做风险预检和意图路由，再按知识优先级取证据，最后才调用模型生成回答，模型不是唯一决策者。",
-  },
-  {
-    question: "这套系统现在最适合拿来展示什么？",
-    answer: "最适合展示首页稳态闭环、关怀场景分流、医疗支持承接、伴侣同步协作，以及带引用的 AI 问答能力。",
-  },
-];
-
-function SectionHeader({ icon: Icon, title, desc, tone = "bg-[#eef3ef] text-[#4f6158]" }) {
-  return (
-    <div className="flex items-center gap-3">
-      <span className={`grid h-11 w-11 place-items-center rounded-2xl ${tone}`}>
-        <Icon className="h-5 w-5" />
-      </span>
-      <div>
-        <h2 className="text-2xl font-bold text-[#46564c]">{title}</h2>
-        <p className="mt-1 text-sm text-[#6c7770]">{desc}</p>
-      </div>
-    </div>
-  );
-}
+const prefersReducedMotion = () =>
+  typeof window !== "undefined" && window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches;
 
 export default function AppSystemGuidePage() {
   const [previewMessage, setPreviewMessage] = useState("");
+  const pageSections = appGuideContent.sections;
+  const pageSectionIds = useMemo(() => pageSections.map((section) => section.id), [pageSections]);
+  const activeSection = useActiveSection(pageSectionIds);
   const sampleProfile = useMemo(
     () => ({
       name: "体验用户",
@@ -125,126 +79,88 @@ export default function AppSystemGuidePage() {
   );
   const dietAdvice = useMemo(() => generateNutritionAdvice(sampleProfile), [sampleProfile]);
   const exerciseAdvice = useMemo(() => getTodayExerciseQuickView(sampleProfile), [sampleProfile]);
+  const navigateToSection = (sectionId) => {
+    if (typeof document === "undefined") return;
+    const target = document.getElementById(sectionId);
+    if (!target) return;
+
+    if (typeof window !== "undefined") {
+      window.history.replaceState(null, "", `#${sectionId}`);
+    }
+
+    target.scrollIntoView({
+      behavior: prefersReducedMotion() ? "auto" : "smooth",
+      block: "start",
+    });
+  };
   const openHome = () => (window.location.href = "/");
   const openTest = () => (window.location.href = "/test");
 
   return (
     <div className="min-h-screen bg-[radial-gradient(circle_at_top_left,rgba(244,197,189,.32),transparent_32%),radial-gradient(circle_at_top_right,rgba(171,196,183,.28),transparent_34%),linear-gradient(180deg,#fcfaf5_0%,#f5f0e7_100%)] px-4 py-6 sm:px-6 lg:px-8">
-      <div className="mx-auto max-w-6xl space-y-6">
-        <Card className="overflow-hidden border-0 bg-[linear-gradient(135deg,rgba(255,255,255,.94),rgba(250,244,235,.92))] p-0 shadow-[0_24px_60px_-30px_rgba(93,106,97,.35)]">
-          <div className="grid gap-0 lg:grid-cols-[1.12fr,.88fr]">
-            <div className="p-6 sm:p-8">
-              <div className="inline-flex items-center gap-2 rounded-full border border-[#d8cec0] bg-white/75 px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-[#6b746d]">
-                <BookOpen className="h-3.5 w-3.5" />
-                {appGuideContent.hero.badge}
-              </div>
-              <h1 className="mt-4 text-3xl font-extrabold tracking-tight text-[#425248] sm:text-4xl lg:text-[2.8rem]">{appGuideContent.hero.title}</h1>
-              <p className="mt-4 max-w-3xl text-base leading-7 text-[#5a6760] sm:text-[1.05rem]">{appGuideContent.hero.summary}</p>
-              <div className="mt-5 rounded-[1.8rem] border border-[#e4ddd1] bg-[#fffdf9] p-4">
-                <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[#88958d]">System Definition</p>
-                <p className="mt-2 text-base font-semibold text-[#46564c]">{appGuideContent.hero.definition}</p>
-              </div>
-              <div className="mt-5 flex flex-wrap gap-2">
-                {appGuideContent.hero.chips.map((chip) => (
-                  <span key={chip} className="rounded-full border border-[#dde5df] bg-white/80 px-3 py-1.5 text-xs font-semibold text-[#4f6158]">{chip}</span>
-                ))}
-              </div>
-              <div className="mt-6 flex flex-wrap gap-3">
-                <button type="button" onClick={openHome} className="inline-flex items-center gap-2 rounded-full bg-[#4f6158] px-5 py-3 text-sm font-bold text-white transition hover:brightness-95">
-                  打开主应用
-                  <ArrowRight className="h-4 w-4" />
-                </button>
-                <button type="button" onClick={openTest} className="inline-flex items-center gap-2 rounded-full border border-[#cfd8d2] bg-white px-5 py-3 text-sm font-semibold text-[#4f6158] transition hover:bg-[#f6f8f5]">
-                  打开测试页
-                  <Activity className="h-4 w-4" />
-                </button>
-              </div>
-            </div>
-            <div className="bg-[linear-gradient(180deg,rgba(91,110,101,.95),rgba(121,142,130,.92))] p-6 text-white sm:p-8">
-              <div className="rounded-[1.7rem] border border-white/12 bg-white/8 p-4 backdrop-blur-sm">
-                <div className="flex flex-wrap items-center gap-2">
-                  <span className="rounded-full bg-white/14 px-3 py-1 text-xs font-semibold text-white">{appVersionInfo.currentVersion}</span>
-                  <span className="text-xs font-semibold uppercase tracking-[0.14em] text-white/68">{appVersionInfo.releaseDate}</span>
-                  <span className="text-xs font-semibold uppercase tracking-[0.14em] text-white/68">{appVersionInfo.codename}</span>
-                </div>
-                <p className="mt-3 text-sm leading-6 text-white/88">{appVersionInfo.summary}</p>
-              </div>
-              <div className="mt-4 space-y-3">
-                {appGuideContent.hero.highlights.map((item) => (
-                  <div key={item.label} className="rounded-[1.6rem] border border-white/12 bg-white/8 p-4 backdrop-blur-sm">
-                    <p className="text-xs font-semibold uppercase tracking-[0.16em] text-white/65">{item.label}</p>
-                    <p className="mt-2 text-sm font-semibold leading-6 text-white/92">{item.value}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </Card>
+      <DocsBackToTopButton />
 
-        <Card className="border border-[#e3ddd2] bg-[linear-gradient(180deg,rgba(255,255,255,.85),rgba(248,243,236,.9))] p-4 sm:p-5 xl:hidden">
-          <div className="flex items-center justify-between gap-3">
-            <div>
-              <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[#88958d]">On This Page</p>
-              <h2 className="mt-1 text-lg font-bold text-[#46564c]">章节目录</h2>
-            </div>
-            <span className="rounded-full bg-[#eef3ef] px-3 py-1 text-xs font-semibold text-[#4f6158]">
-              {pageSections.length} sections
-            </span>
-          </div>
-          <div className="mt-4 flex flex-wrap gap-2">
-            {pageSections.map((section) => (
-              <a
-                key={section.id}
-                href={`#${section.id}`}
-                className="rounded-full border border-[#dce5df] bg-white/90 px-3 py-2 text-xs font-semibold text-[#4f6158] transition hover:bg-[#f7faf8]"
-              >
-                {section.title}
-              </a>
-            ))}
-          </div>
-        </Card>
+      <div className="mx-auto max-w-[1320px] space-y-6">
+        <DocsCover
+          cover={appGuideContent.cover}
+          hero={appGuideContent.hero}
+          versionInfo={appVersionInfo}
+          activeSection={activeSection}
+          onNavigate={navigateToSection}
+          onOpenHome={openHome}
+          onOpenTest={openTest}
+        />
 
-        <div className="grid gap-6 xl:grid-cols-[260px,minmax(0,1fr)]">
+        <div className="sticky top-3 z-30 xl:hidden">
+          <Card className="border border-[#e3ddd2] bg-[linear-gradient(180deg,rgba(255,255,255,.88),rgba(248,243,236,.94))] p-4 shadow-[0_18px_40px_-32px_rgba(88,100,93,.35)] backdrop-blur">
+            <div className="flex items-center justify-between gap-3">
+              <div>
+                <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[#88958d]">On This Page</p>
+                <h2 className="mt-1 text-lg font-bold text-[#46564c]">章节目录</h2>
+              </div>
+              <span className="rounded-full bg-[#eef3ef] px-3 py-1 text-xs font-semibold text-[#4f6158]">
+                {pageSections.length} sections
+              </span>
+            </div>
+            <div className="mt-4">
+              <DocsSectionNav
+                sections={pageSections}
+                activeSection={activeSection}
+                onNavigate={navigateToSection}
+                variant="pills"
+              />
+            </div>
+          </Card>
+        </div>
+
+        <div className="grid gap-6 xl:grid-cols-[280px,minmax(0,1fr)]">
           <aside className="hidden xl:block">
             <div className="sticky top-6 space-y-4">
               <Card className="border border-[#dcd5c8] bg-[linear-gradient(180deg,rgba(255,255,255,.92),rgba(246,240,231,.95))] p-5 shadow-[0_18px_40px_-30px_rgba(88,100,93,.35)]">
                 <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#88958d]">Documentation</p>
                 <h2 className="mt-2 text-xl font-bold text-[#46564c]">页面目录</h2>
-                <div className="mt-4 space-y-2">
-                  {pageSections.map((section, index) => (
-                    <a
-                      key={section.id}
-                      href={`#${section.id}`}
-                      className="group block rounded-[1.2rem] border border-[#e6dfd3] bg-white/85 px-3 py-3 transition hover:border-[#cfdcd3] hover:bg-[#f7faf8]"
-                    >
-                      <div className="flex items-start gap-3">
-                        <span className="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-[#4f6158] text-[11px] font-bold text-white">
-                          {index + 1}
-                        </span>
-                        <div>
-                          <p className="text-sm font-semibold text-[#46564c]">{section.title}</p>
-                          <p className="mt-1 text-xs text-[#758077]">{section.desc}</p>
-                        </div>
-                      </div>
-                    </a>
-                  ))}
+                <div className="mt-4">
+                  <DocsSectionNav sections={pageSections} activeSection={activeSection} onNavigate={navigateToSection} />
                 </div>
               </Card>
 
               <Card className="border border-[#e5ddd0] bg-[#fffdf9] p-5">
                 <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[#88958d]">Delivery Note</p>
-                <p className="mt-3 text-sm leading-6 text-[#667168]">
-                  本页适合产品演示与内部讲解；完整对外交付底稿请配合仓库里的
-                  `docs/app-current-system-guide.md` 一起使用。
-                </p>
+                <p className="mt-3 text-sm leading-6 text-[#667168]">{appGuideContent.delivery.note}</p>
+                <div className="mt-4 rounded-[1.4rem] border border-[#e7e0d4] bg-[#f8faf7] p-4">
+                  <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[#88958d]">当前阅读位置</p>
+                  <p className="mt-2 text-sm font-semibold text-[#46564c]">
+                    {pageSections.find((section) => section.id === activeSection)?.title || appGuideContent.cover.title}
+                  </p>
+                </div>
               </Card>
             </div>
           </aside>
 
           <div className="space-y-6">
-        <div id="quick-start" className="scroll-mt-24 grid gap-6 xl:grid-cols-[1fr,.92fr]">
+        <div id="quick-start" className="scroll-mt-32 grid gap-6 xl:grid-cols-[1fr,.92fr]">
           <Card className="p-6 sm:p-7">
-            <SectionHeader icon={Sparkles} title="快速开始" desc="第一次使用时，建议先按这个顺序完成主链路。" />
+            <DocsSectionHeader icon={Sparkles} title="快速开始" desc="第一次使用时，建议先按这个顺序完成主链路。" />
             <div className="mt-5 space-y-4">
               {appGuideContent.quickStart.map((item, index) => (
                 <div key={item.title} className="rounded-[1.7rem] border border-[#e7e0d4] bg-[#fffdf9] p-4">
@@ -260,7 +176,7 @@ export default function AppSystemGuidePage() {
             </div>
           </Card>
           <Card className="p-6 sm:p-7">
-            <SectionHeader icon={ShieldCheck} title="当前边界与注意事项" desc="这部分决定当前系统应该如何被理解和对外介绍。" tone="bg-[#f3efe8] text-[#6c5a49]" />
+            <DocsSectionHeader icon={CheckCircle2} title="当前边界与注意事项" desc="这部分决定当前系统应该如何被理解和对外介绍。" tone="bg-[#f3efe8] text-[#6c5a49]" />
             <div className="mt-5 space-y-3">
               {appGuideContent.boundaries.map((item) => (
                 <div key={item} className="rounded-[1.6rem] border border-[#ece4d8] bg-[linear-gradient(180deg,#fffdf9,#fbf7f0)] p-4">
@@ -274,8 +190,8 @@ export default function AppSystemGuidePage() {
           </Card>
         </div>
 
-        <Card id="main-flow" className="scroll-mt-24 p-6 sm:p-7">
-          <SectionHeader icon={ClipboardList} title="用户主流程与功能链路" desc="这一段对应 roadmap 里的当前产品能力总览和主链路。" />
+        <Card id="main-flow" className="scroll-mt-32 p-6 sm:p-7">
+          <DocsSectionHeader icon={ClipboardList} title="用户主流程与功能链路" desc="这一段对应 roadmap 里的当前产品能力总览和主链路。" />
           <div className="mt-5 grid gap-4 lg:grid-cols-5">
             {appGuideContent.mainFlow.map((item) => (
               <div key={item.step} className="rounded-[1.8rem] border border-[#e7e0d4] bg-[#fffdf9] p-4">
@@ -287,8 +203,8 @@ export default function AppSystemGuidePage() {
           </div>
         </Card>
 
-        <Card id="navigation" className="scroll-mt-24 p-6 sm:p-7">
-          <SectionHeader icon={ArrowRight} title="四大导航如何协作" desc="可以把它理解成每天入口、场景入口、专业入口和系统入口的分工。" />
+        <Card id="navigation" className="scroll-mt-32 p-6 sm:p-7">
+          <DocsSectionHeader icon={ArrowRight} title="四大导航如何协作" desc="可以把它理解成每天入口、场景入口、专业入口和系统入口的分工。" />
           <div className="mt-5 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
             {appGuideContent.navigation.map((item) => {
               const Icon = navigationIconMap[item.title] || BookOpen;
@@ -304,8 +220,8 @@ export default function AppSystemGuidePage() {
           </div>
         </Card>
 
-        <Card id="modules" className="scroll-mt-24 p-6 sm:p-7">
-          <SectionHeader icon={BookOpen} title="核心模块逐项说明" desc="每个模块统一回答四件事：解决什么问题、从哪里进入、典型流程、依赖什么架构。" />
+        <Card id="modules" className="scroll-mt-32 p-6 sm:p-7">
+          <DocsSectionHeader icon={BookOpen} title="核心模块逐项说明" desc="每个模块统一回答四件事：解决什么问题、从哪里进入、典型流程、依赖什么架构。" />
           <div className="mt-5 grid gap-4 lg:grid-cols-2">
             {appGuideContent.modules.map((module) => {
               const Icon = moduleIconMap[module.key] || BookOpen;
@@ -334,30 +250,15 @@ export default function AppSystemGuidePage() {
           </div>
         </Card>
 
-        <Card id="architecture" className="scroll-mt-24 p-6 sm:p-7">
-          <SectionHeader icon={Layers3} title="底层技术架构概览" desc="这里把前端承接、数据状态、服务接口、知识优先级和安全机制放到同一张说明里。" />
-          <div className="mt-5 grid gap-4 lg:grid-cols-2">
-            {architectureCards.map((card) => {
-              const Icon = card.icon;
-              return (
-                <div key={card.title} className="rounded-[1.8rem] border border-[#e7e0d4] bg-[#fffdf9] p-5">
-                  <div className="flex items-center gap-3">
-                    <span className="grid h-10 w-10 place-items-center rounded-2xl bg-[#eef3ef] text-[#4f6158]"><Icon className="h-5 w-5" /></span>
-                    <h3 className="text-lg font-bold text-[#46564c]">{card.title}</h3>
-                  </div>
-                  <div className="mt-4 space-y-3">
-                    {card.items.map((item) => (
-                      <div key={item} className="flex items-start gap-3">
-                        <span className="mt-2 h-2.5 w-2.5 shrink-0 rounded-full bg-[#9bb0a3]" />
-                        <p className="text-sm leading-6 text-[#667168]">{item}</p>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              );
-            })}
+        <Card id="architecture" className="scroll-mt-32 overflow-hidden p-6 sm:p-7">
+          <DocsSectionHeader icon={Layers3} title="底层技术架构概览" desc="这里把产品入口、路由分发、检索工具、知识层和治理边界放到一张架构叙事图里。" />
+          <div className="mt-4 rounded-[1.7rem] border border-[#e7e0d4] bg-[linear-gradient(180deg,#fffdf9,#faf6ef)] p-4">
+            <p className="text-sm leading-7 text-[#667168]">{appGuideContent.architecture.summary}</p>
           </div>
-          <div className="mt-5 grid gap-4 xl:grid-cols-[1.1fr,.9fr]">
+          <div className="mt-5">
+            <DocsArchitectureDiagram architecture={appGuideContent.architecture} />
+          </div>
+          <div className="mt-5 grid gap-4 xl:grid-cols-[1.08fr,.92fr]">
             <div className="rounded-[1.8rem] border border-[#e7e0d4] bg-white p-5">
               <h3 className="text-lg font-bold text-[#46564c]">Agent 全链路</h3>
               <div className="mt-4 flex flex-wrap gap-2">
@@ -379,13 +280,18 @@ export default function AppSystemGuidePage() {
                   </div>
                 ))}
               </div>
+              <div className="mt-4 rounded-[1.2rem] border border-[#ebe4d8] bg-[#fffdf9] p-4">
+                <p className="text-sm leading-6 text-[#667168]">
+                  默认不是先联网，而是优先消化当前产品知识与同步后的内部知识，再在必要时做补查和外部搜索。
+                </p>
+              </div>
             </div>
           </div>
         </Card>
 
         <div className="grid gap-6 xl:grid-cols-[1.02fr,.98fr]">
-          <Card id="ai-mechanism" className="scroll-mt-24 p-6 sm:p-7">
-            <SectionHeader icon={Brain} title="AI 助手工作机制" desc="重点不是能不能聊，而是为什么这条回答可信、可控、可解释。" />
+        <Card id="ai-mechanism" className="scroll-mt-32 p-6 sm:p-7">
+            <DocsSectionHeader icon={Brain} title="AI 助手工作机制" desc="重点不是能不能聊，而是为什么这条回答可信、可控、可解释。" />
             <div className="mt-5 rounded-[1.7rem] border border-[#e7e0d4] bg-[#fffdf9] p-4">
               <p className="text-sm leading-7 text-[#667168]">{appGuideContent.aiMechanism.summary}</p>
             </div>
@@ -397,8 +303,8 @@ export default function AppSystemGuidePage() {
               ))}
             </div>
           </Card>
-          <Card id="phase-mapping" className="scroll-mt-24 p-6 sm:p-7">
-            <SectionHeader icon={ClipboardList} title="当前阶段判断" desc="这一段直接对应 roadmap，说明当前系统已经到了哪一步、还缺什么。" tone="bg-[#f5efe8] text-[#7b614c]" />
+          <Card id="phase-mapping" className="scroll-mt-32 p-6 sm:p-7">
+            <DocsSectionHeader icon={ClipboardList} title="当前阶段判断" desc="这一段直接对应 roadmap，说明当前系统已经到了哪一步、还缺什么。" tone="bg-[#f5efe8] text-[#7b614c]" />
             <div className="mt-5 rounded-[1.7rem] border border-[#eadcc8] bg-[#fff8ef] p-4">
               <p className="text-sm leading-7 text-[#7c6855]">{appGuideContent.phaseMapping.summary}</p>
             </div>
@@ -429,8 +335,8 @@ export default function AppSystemGuidePage() {
           </Card>
         </div>
 
-        <Card id="release-notes" className="scroll-mt-24 p-6 sm:p-7">
-          <SectionHeader icon={ClipboardList} title="当前版本说明" desc="release notes 继续保留为版本透明度入口，不与系统说明主体混淆。" />
+        <Card id="release-notes" className="scroll-mt-32 p-6 sm:p-7">
+          <DocsSectionHeader icon={ClipboardList} title="当前版本说明" desc="release notes 继续保留为版本透明度入口，不与系统说明主体混淆。" />
           <div className="mt-5 space-y-4">
             {appReleaseNotes.map((item, index) => (
               <div key={item.version} className="relative pl-8">
@@ -468,9 +374,9 @@ export default function AppSystemGuidePage() {
           </div>
         </Card>
 
-        <div id="safety-boundary" className="scroll-mt-24 grid gap-6 xl:grid-cols-[1.08fr,.92fr]">
+        <div id="safety-boundary" className="scroll-mt-32 grid gap-6 xl:grid-cols-[1.08fr,.92fr]">
           <Card className="p-6 sm:p-7">
-            <SectionHeader icon={Utensils} title="真实界面预览：饮食与运动" desc={appGuideContent.previewNote} />
+            <DocsSectionHeader icon={Utensils} title="真实界面预览：饮食与运动" desc={appGuideContent.previewNote} />
             <div className="mt-5 space-y-4">
               <DietAdviceCard advice={dietAdvice} onRecordMeal={(mealType) => setPreviewMessage(`文档页中的 ${mealType} 记录按钮仅用于预览。请回到首页完成真实记录。`)} />
               <ExerciseAdviceCard advice={exerciseAdvice} onCheckin={(task) => setPreviewMessage(`文档页中的“${task?.name || "运动任务"}”打卡按钮仅用于预览。请回到首页进行真实打卡。`)} />
@@ -478,7 +384,7 @@ export default function AppSystemGuidePage() {
             </div>
           </Card>
           <Card className="p-6 sm:p-7">
-            <SectionHeader icon={LockKeyhole} title="数据、安全与协作边界" desc="这一组信息建议在对外演示、交付和产品介绍时一并保留。" tone="bg-[#f5efe8] text-[#7b614c]" />
+            <DocsSectionHeader icon={LockKeyhole} title="数据、安全与协作边界" desc="这一组信息建议在对外演示、交付和产品介绍时一并保留。" tone="bg-[#f5efe8] text-[#7b614c]" />
             <div className="mt-5 space-y-4">
               {[
                 ["数据来源与状态承接", "当前版本采用本地存储、mock API、本地服务状态文件和知识快照共同承接体验。这保证了演示与单设备连续体验，但尚不等同于完整的多端实时同步系统。"],
@@ -498,10 +404,10 @@ export default function AppSystemGuidePage() {
           </Card>
         </div>
 
-        <Card id="faq" className="scroll-mt-24 border border-[#e4ddd1] bg-[#fffdf9] p-6 sm:p-7">
-          <SectionHeader icon={BookOpen} title="FAQ" desc="更适合对外说明和演示讲解时直接引用的几个高频问题。" />
+        <Card id="faq" className="scroll-mt-32 border border-[#e4ddd1] bg-[#fffdf9] p-6 sm:p-7">
+          <DocsSectionHeader icon={BookOpen} title="FAQ" desc="更适合对外说明和演示讲解时直接引用的几个高频问题。" />
           <div className="mt-5 space-y-3">
-            {deliveryFaqs.map((item) => (
+            {appGuideContent.faq.map((item) => (
               <details key={item.question} className="rounded-[1.5rem] border border-[#e7e0d4] bg-white p-4">
                 <summary className="cursor-pointer text-sm font-semibold text-[#46564c]">{item.question}</summary>
                 <p className="mt-3 text-sm leading-6 text-[#667168]">{item.answer}</p>
@@ -510,7 +416,7 @@ export default function AppSystemGuidePage() {
           </div>
         </Card>
 
-        <Card id="next-step" className="scroll-mt-24 bg-[linear-gradient(135deg,#4e6057,#708577)] p-6 text-white sm:p-7">
+        <Card id="next-step" className="scroll-mt-32 bg-[linear-gradient(135deg,#4e6057,#708577)] p-6 text-white sm:p-7">
           <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
             <div>
               <p className="text-xs font-semibold uppercase tracking-[0.18em] text-white/65">Next Step</p>

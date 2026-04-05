@@ -1,10 +1,5 @@
-<<<<<<< HEAD
 import { CBT_CARE_LEVEL_CONTENT, CBT_MODULE_LIBRARY, CBT_PROGRAM_VERSION } from "../data/cbtContent.js";
 import { ALERT_LEVELS, assessEmotionalRisk } from "./riskAssessment.js";
-=======
-import { CBT_CARE_LEVEL_CONTENT, CBT_MODULE_LIBRARY, CBT_PROGRAM_VERSION } from "../data/cbtContent";
-import { shouldTriggerEmergencyAlert, assessEmotionalRisk } from "./riskAssessment";
->>>>>>> 356bd4d38d8b7f31d8a35a177e59ac40d7d6cf8a
 
 export const CBT_PHASE = {
   INTAKE: "intake",
@@ -141,26 +136,17 @@ export const isChildbirthFearPositive = (assessment = {}) => {
 
 export const deriveDynamicRiskSignals = ({ checkIns = [] } = {}) => {
   const riskAssessment = assessEmotionalRisk({ checkIns, lang: "zh" });
-<<<<<<< HEAD
   return {
     level: riskAssessment.level,
     score: riskAssessment.score,
     emergencyTriggered: riskAssessment?.alert?.triggered === true,
     alertLevel: riskAssessment?.alert?.level || ALERT_LEVELS.NONE,
-=======
-  const emergencyTriggered = shouldTriggerEmergencyAlert({ checkIns });
-  return {
-    level: riskAssessment.level,
-    score: riskAssessment.score,
-    emergencyTriggered,
->>>>>>> 356bd4d38d8b7f31d8a35a177e59ac40d7d6cf8a
     metrics: riskAssessment.metrics || {},
   };
 };
 
 export const determineCbtCareLevel = ({ assessment, checkIns = [] }) => {
   const normalized = normalizeCbtAssessmentInput(assessment);
-<<<<<<< HEAD
   const riskAssessment = assessEmotionalRisk({
     lang: "zh",
     checkIns,
@@ -173,20 +159,13 @@ export const determineCbtCareLevel = ({ assessment, checkIns = [] }) => {
     alertLevel: riskAssessment?.alert?.level || ALERT_LEVELS.NONE,
     metrics: riskAssessment.metrics || {},
   };
-=======
-  const signals = deriveDynamicRiskSignals({ checkIns });
->>>>>>> 356bd4d38d8b7f31d8a35a177e59ac40d7d6cf8a
 
   const level3 =
     normalized.selfHarmRisk ||
     normalized.epdsScore >= 13 ||
     normalized.gad7Score >= 15 ||
-<<<<<<< HEAD
     normalized.isi7Score >= 15 ||
     signals.alertLevel === ALERT_LEVELS.URGENT;
-=======
-    signals.emergencyTriggered;
->>>>>>> 356bd4d38d8b7f31d8a35a177e59ac40d7d6cf8a
 
   if (level3) {
     return {
@@ -199,11 +178,7 @@ export const determineCbtCareLevel = ({ assessment, checkIns = [] }) => {
   const level2 =
     (normalized.epdsScore >= 10 && normalized.epdsScore <= 12) ||
     (normalized.gad7Score >= 10 && normalized.gad7Score <= 14) ||
-<<<<<<< HEAD
     (normalized.isi7Score >= 8 && normalized.isi7Score <= 14) ||
-=======
-    normalized.isi7Score >= 15 ||
->>>>>>> 356bd4d38d8b7f31d8a35a177e59ac40d7d6cf8a
     signals.level === "medium" ||
     signals.metrics?.consecutiveLowMoodDays >= 3;
 
@@ -371,7 +346,6 @@ export const buildCareTeamStatus = ({ lang = "zh", careLevel, now = new Date(), 
 };
 
 export const buildCrisisState = ({ lang = "zh", assessment = {}, checkIns = [], careLevel }) => {
-<<<<<<< HEAD
   const normalized = normalizeCbtAssessmentInput(assessment);
   const riskAssessment = assessEmotionalRisk({
     lang,
@@ -383,11 +357,6 @@ export const buildCrisisState = ({ lang = "zh", assessment = {}, checkIns = [], 
       riskAssessment?.level === "high" ||
       careLevel === CBT_CARE_LEVEL.LEVEL_3
   );
-=======
-  const signals = deriveDynamicRiskSignals({ checkIns });
-  const normalized = normalizeCbtAssessmentInput(assessment);
-  const active = Boolean(normalized.selfHarmRisk || signals.emergencyTriggered || careLevel === CBT_CARE_LEVEL.LEVEL_3);
->>>>>>> 356bd4d38d8b7f31d8a35a177e59ac40d7d6cf8a
   if (!active) {
     return {
       active: false,
@@ -400,7 +369,6 @@ export const buildCrisisState = ({ lang = "zh", assessment = {}, checkIns = [], 
 
   return {
     active: true,
-<<<<<<< HEAD
     level: riskAssessment?.alert?.level === ALERT_LEVELS.URGENT ? "high" : "watch",
     title: pickText(lang, { zh: "当前需要优先安全与专业支持", en: "Safety and professional support come first now." }),
     desc:
@@ -419,13 +387,6 @@ export const buildCrisisState = ({ lang = "zh", assessment = {}, checkIns = [], 
               en: "Overall risk remains elevated. Prioritize referral, a safety plan, and professional follow-up.",
             }
           ),
-=======
-    level: normalized.selfHarmRisk || signals.emergencyTriggered ? "high" : "watch",
-    title: pickText(lang, { zh: "当前需要优先安全与专业支持", en: "Safety and professional support come first now." }),
-    desc: normalized.selfHarmRisk
-      ? pickText(lang, { zh: "检测到安全风险，请立即联系专业人员并通知伴侣或家人。", en: "Safety risk detected. Contact a professional now and alert partner or family." })
-      : pickText(lang, { zh: "近期风险持续偏高，请先完成转介与安全计划。", en: "Recent risk remains high. Complete referral and a safety plan first." }),
->>>>>>> 356bd4d38d8b7f31d8a35a177e59ac40d7d6cf8a
     actions: [
       {
         id: "contact_clinician",

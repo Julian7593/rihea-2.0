@@ -321,7 +321,6 @@ a {
   height: 0.8rem;
 }
 
-<<<<<<< HEAD
 .chat-thread {
   scroll-padding-bottom: 1rem;
 }
@@ -388,9 +387,6 @@ a {
 .typing-dots span:nth-child(3) {
   animation-delay: 240ms;
 }
-
-=======
->>>>>>> 356bd4d38d8b7f31d8a35a177e59ac40d7d6cf8a
 .voice-wave span {
   width: 0.18rem;
   height: 0.25rem;
@@ -424,7 +420,6 @@ a {
   }
 }
 
-<<<<<<< HEAD
 @keyframes typing-dot-bounce {
   0%,
   80%,
@@ -453,16 +448,8 @@ a {
   .chat-bubble {
     transition: none;
   }
-
   .voice-wave span {
     height: 0.4rem;
-=======
-@media (prefers-reduced-motion: reduce) {
-  .voice-wave span {
-    animation: none;
-    height: 0.4rem;
-    opacity: 0.8;
->>>>>>> 356bd4d38d8b7f31d8a35a177e59ac40d7d6cf8a
   }
 }
 

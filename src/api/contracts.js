@@ -431,7 +431,6 @@ export const apiContracts = {
         message: "string",
       },
     },
-<<<<<<< HEAD
     photoAnalyze: {
       method: "POST",
       path: "/v1/nutrition/photo-analyze",
@@ -453,8 +452,6 @@ export const apiContracts = {
         errorMessage: "string?",
       },
     },
-=======
->>>>>>> 356bd4d38d8b7f31d8a35a177e59ac40d7d6cf8a
   },
   fitness: {
     getAdvice: {
@@ -578,7 +575,6 @@ export const apiContracts = {
       },
     },
   },
-<<<<<<< HEAD
   agent: {
     chat: {
       method: "POST",
@@ -657,8 +653,6 @@ export const apiContracts = {
       },
     },
   },
-=======
->>>>>>> 356bd4d38d8b7f31d8a35a177e59ac40d7d6cf8a
   support: {
     getCounselingSlots: {
       method: "GET",

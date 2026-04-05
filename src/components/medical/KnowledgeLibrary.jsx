@@ -11,11 +11,7 @@ import {
 } from "../../api/medical";
 import { txt } from "../../utils/txt";
 
-<<<<<<< HEAD
 export default function KnowledgeLibrary({ lang, style, pregnancyWeek, riskLevel, alert = null }) {
-=======
-export default function KnowledgeLibrary({ lang, style, pregnancyWeek, riskLevel }) {
->>>>>>> 356bd4d38d8b7f31d8a35a177e59ac40d7d6cf8a
   const [activeCategory, setActiveCategory] = useState("first");
   const [articles, setArticles] = useState([]);
   const [searchKeyword, setSearchKeyword] = useState("");
@@ -23,7 +19,6 @@ export default function KnowledgeLibrary({ lang, style, pregnancyWeek, riskLevel
   const [categories, setCategories] = useState([]);
   const [showEmergency, setShowEmergency] = useState(false);
   const [typeFilter, setTypeFilter] = useState("all"); // all, medical, psychology, practice, faq
-<<<<<<< HEAD
   const shouldPrioritizeSupport = !isSearching && !showEmergency && (riskLevel === "medium" || riskLevel === "high");
   const shouldPrioritizeEmergency = !isSearching && !showEmergency && alert?.level === "urgent";
 
@@ -35,8 +30,6 @@ export default function KnowledgeLibrary({ lang, style, pregnancyWeek, riskLevel
       return true;
     });
   };
-=======
->>>>>>> 356bd4d38d8b7f31d8a35a177e59ac40d7d6cf8a
 
   // Load categories
   useEffect(() => {
@@ -60,7 +53,6 @@ export default function KnowledgeLibrary({ lang, style, pregnancyWeek, riskLevel
       );
     }
 
-<<<<<<< HEAD
       if (loadPromise) {
         loadPromise.then(async (baseArticles) => {
           let nextArticles = Array.isArray(baseArticles) ? baseArticles : [];
@@ -76,12 +68,6 @@ export default function KnowledgeLibrary({ lang, style, pregnancyWeek, riskLevel
         });
       }
   }, [activeCategory, alert?.level, isSearching, lang, pregnancyWeek, riskLevel, shouldPrioritizeEmergency, shouldPrioritizeSupport, showEmergency, typeFilter]);
-=======
-    if (loadPromise) {
-      loadPromise.then(setArticles);
-    }
-  }, [activeCategory, lang, isSearching, showEmergency, typeFilter]);
->>>>>>> 356bd4d38d8b7f31d8a35a177e59ac40d7d6cf8a
 
   // Search articles
   useEffect(() => {
@@ -136,7 +122,6 @@ export default function KnowledgeLibrary({ lang, style, pregnancyWeek, riskLevel
             {txt(lang, "Evidence-based medical advice to support your emotional health.", "基于循证医学的建议，支持您的心理健康。")}
           </p>
 
-<<<<<<< HEAD
           {(shouldPrioritizeSupport || shouldPrioritizeEmergency) && (
             <div className="mt-3 rounded-2xl border border-sage/20 bg-[#fffaf2] px-3 py-2 text-xs font-semibold text-clay/72">
               {shouldPrioritizeEmergency
@@ -145,8 +130,6 @@ export default function KnowledgeLibrary({ lang, style, pregnancyWeek, riskLevel
             </div>
           )}
 
-=======
->>>>>>> 356bd4d38d8b7f31d8a35a177e59ac40d7d6cf8a
           {/* Search */}
           <div className="mt-3 relative">
             <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-clay/60" />
@@ -371,7 +354,6 @@ export default function KnowledgeLibrary({ lang, style, pregnancyWeek, riskLevel
             {txt(lang, "Evidence-based advice for your journey.", "基于循证医学的建议。")}
           </p>
 
-<<<<<<< HEAD
           {(shouldPrioritizeSupport || shouldPrioritizeEmergency) && (
             <div className="mt-3 rounded-2xl border border-sage/20 bg-[#fffaf2] px-3 py-2 text-xs font-semibold text-clay/72">
               {shouldPrioritizeEmergency
@@ -380,8 +362,6 @@ export default function KnowledgeLibrary({ lang, style, pregnancyWeek, riskLevel
             </div>
           )}
 
-=======
->>>>>>> 356bd4d38d8b7f31d8a35a177e59ac40d7d6cf8a
           {/* Search */}
           <div className="mt-4 relative">
             <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-clay/60" />

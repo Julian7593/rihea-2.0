@@ -2,10 +2,7 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import {
   ArrowLeft,
   Bell,
-<<<<<<< HEAD
   BookOpen,
-=======
->>>>>>> 356bd4d38d8b7f31d8a35a177e59ac40d7d6cf8a
   CalendarDays,
   ChevronRight,
   CircleHelp,
@@ -18,10 +15,7 @@ import {
   Phone,
   ShieldCheck,
   Siren,
-<<<<<<< HEAD
   Sparkles,
-=======
->>>>>>> 356bd4d38d8b7f31d8a35a177e59ac40d7d6cf8a
   Stethoscope,
   UserRound,
   Volume2,
@@ -30,14 +24,12 @@ import Card from "../ui/Card";
 import ToggleRow from "../ui/ToggleRow";
 import PartnerCbtSummaryCard from "../cbt/PartnerCbtSummaryCard";
 import PartnerSyncCenter from "../partner/PartnerSyncCenter";
-<<<<<<< HEAD
 import { appReleaseNotes, appVersionInfo } from "../../data/appMeta";
 import { appGuideContent } from "../../data/appGuideContent";
-=======
->>>>>>> 356bd4d38d8b7f31d8a35a177e59ac40d7d6cf8a
 import { txt } from "../../utils/txt";
 import { calcCheckInStreak } from "../../utils/checkin";
 import { useToast } from "../../contexts/ToastContext";
+import useActiveSection from "../../hooks/useActiveSection";
 import { fetchCbtPartnerTasks } from "../../api/cbt";
 import {
   confirmPartnerBinding,
@@ -103,7 +95,6 @@ const EMERGENCY_TITLE_ZH = {
   "Hospital hotline": "医院热线",
 };
 
-<<<<<<< HEAD
 const RELEASE_SECTION_META = {
   added: {
     label: { zh: "新增", en: "Added" },
@@ -124,9 +115,6 @@ const RELEASE_SECTION_META = {
     dot: "bg-[#d28c8c]",
   },
 };
-
-=======
->>>>>>> 356bd4d38d8b7f31d8a35a177e59ac40d7d6cf8a
 const escapeRegExp = (value = "") => value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 
 const localizeCounselingSlotLabel = (label, lang) => {
@@ -626,14 +614,10 @@ export default function ProfileTab({
     );
   }, [handleCreatePartnerInvite, lang, partnerOverview, runPartnerMutation]);
 
-<<<<<<< HEAD
   const openStandaloneGuide = useCallback(() => {
     if (typeof window === "undefined") return;
     window.location.href = "/docs";
   }, []);
-
-=======
->>>>>>> 356bd4d38d8b7f31d8a35a177e59ac40d7d6cf8a
   const profileRows = useMemo(
     () => [
       {
@@ -673,7 +657,6 @@ export default function ProfileTab({
         Icon: Stethoscope,
       },
       {
-<<<<<<< HEAD
         key: "docs",
         label: txt(lang, "App guide", "使用文档"),
         desc: txt(lang, "See how each area of the app is designed to be used", "查看应用结构、使用路径与功能说明"),
@@ -686,8 +669,6 @@ export default function ProfileTab({
         Icon: Sparkles,
       },
       {
-=======
->>>>>>> 356bd4d38d8b7f31d8a35a177e59ac40d7d6cf8a
         key: "help",
         label: txt(lang, "Help center and feedback", "帮助中心与反馈"),
         desc: txt(lang, "FAQ, report issue and feature request", "常见问题、问题反馈与功能建议"),
@@ -722,10 +703,18 @@ export default function ProfileTab({
     getPartnerSharingOptions(lang).find((item) => item.value === partnerOverview?.sharingLevel)?.label ||
     txt(lang, "Off", "不共享");
   const partnerMainTask = partnerOverview?.preview?.mainTask || null;
-<<<<<<< HEAD
   const releaseSectionOrder = useMemo(() => ["added", "improved", "fixed"], []);
-=======
->>>>>>> 356bd4d38d8b7f31d8a35a177e59ac40d7d6cf8a
+  const docsSections = useMemo(
+    () => [
+      { id: "profile-docs-overview", label: txt(lang, "Overview", "概览") },
+      { id: "profile-docs-flow", label: txt(lang, "Main flow", "主流程") },
+      { id: "profile-docs-architecture", label: txt(lang, "Architecture", "架构") },
+      { id: "profile-docs-phase", label: txt(lang, "Phase", "阶段") },
+    ],
+    [lang]
+  );
+  const docsSectionIds = useMemo(() => docsSections.map((section) => section.id), [docsSections]);
+  const activeDocsSection = useActiveSection(activePage === "docs" ? docsSectionIds : []);
 
   useEffect(() => {
     if (!pageRequest?.pageId) return;
@@ -930,10 +919,9 @@ export default function ProfileTab({
           </Card>
         )}
 
-<<<<<<< HEAD
         {activePage === "docs" && (
           <div className="space-y-4">
-            <Card style={style}>
+            <Card id="profile-docs-overview" style={style}>
               <div className="flex flex-wrap items-center gap-2">
                 <span className="rounded-full px-3 py-1 text-xs font-semibold" style={{ backgroundColor: style.pillBg, color: style.pillText }}>
                   {appVersionInfo.currentVersion}
@@ -945,14 +933,39 @@ export default function ProfileTab({
                   {appVersionInfo.codename}
                 </span>
               </div>
-              <div className="mt-4 rounded-[1.45rem] border border-sage/20 bg-[#fffaf2] p-4">
-                <p className="text-sm font-semibold text-clay">
-                  {txt(lang, "Current product definition", "当前产品定义")}
+
+              <div className="mt-4 rounded-[1.6rem] border border-sage/20 bg-[linear-gradient(135deg,rgba(255,250,242,.98),rgba(247,242,233,.95))] p-4">
+                <p className="text-xs font-semibold uppercase tracking-[0.14em] text-clay/55">
+                  {txt(lang, "Product guide", "产品说明")}
                 </p>
-                <p className="mt-2 text-sm font-semibold text-clay">{appGuideContent.hero.definition}</p>
-                <p className="mt-2 text-sm text-clay/75">{appGuideContent.hero.summary}</p>
+                <p className="mt-2 text-lg font-semibold text-clay">{appGuideContent.cover.oneLiner}</p>
+                <p className="mt-2 text-sm leading-6 text-clay/75">{appGuideContent.cover.subtitle}</p>
               </div>
-              <div className="mt-3 grid gap-2 sm:grid-cols-3">
+
+              <div className="mt-4 flex gap-2 overflow-x-auto pb-1">
+                {docsSections.map((section) => {
+                  const isActive = activeDocsSection === section.id;
+                  return (
+                    <button
+                      key={section.id}
+                      type="button"
+                      onClick={() => {
+                        const target = document.getElementById(section.id);
+                        if (target) {
+                          target.scrollIntoView({ behavior: "smooth", block: "start" });
+                        }
+                      }}
+                      className={`shrink-0 rounded-full border px-3 py-2 text-xs font-semibold transition ${
+                        isActive ? "border-clay bg-clay text-white" : "border-sage/20 bg-[#fffaf2] text-clay"
+                      }`}
+                    >
+                      {section.label}
+                    </button>
+                  );
+                })}
+              </div>
+
+              <div className="mt-4 grid gap-2 sm:grid-cols-3">
                 {appGuideContent.hero.highlights.map((item) => (
                   <div key={item.label} className="rounded-2xl border border-sage/20 bg-[#fffaf2] p-3">
                     <p className="text-xs font-semibold uppercase tracking-[0.12em] text-clay/60">{item.label}</p>
@@ -962,7 +975,7 @@ export default function ProfileTab({
               </div>
             </Card>
 
-            <Card style={style}>
+            <Card id="profile-docs-flow" style={style}>
               <SectionTitle
                 title={txt(lang, "Main flow", "主流程")}
                 subtitle={txt(lang, "Understand the app through the actual usage chain.", "用真实使用链路理解当前产品。")}
@@ -1004,29 +1017,32 @@ export default function ProfileTab({
                 </div>
               </Card>
 
-              <Card style={style}>
+              <Card id="profile-docs-architecture" style={style}>
                 <SectionTitle
                   title={txt(lang, "Architecture overview", "技术架构概览")}
                   subtitle={txt(lang, "Explain clearly where data comes from and why AI is controlled.", "把前端承接、数据来源和 AI 为什么受控解释清楚。")}
                 />
                 <div className="mt-3 space-y-2">
-                  {[
-                    ["前端承接", appGuideContent.architecture.frontendLayers[0]],
-                    ["数据状态", appGuideContent.architecture.dataState[0]],
-                    ["服务接口", appGuideContent.architecture.serviceLayer[0]],
-                    ["知识优先级", appGuideContent.architecture.knowledgePriority.join(" -> ")],
-                    ["AI 定位", appGuideContent.aiMechanism.points[2]],
-                  ].map(([title, desc]) => (
-                    <div key={title} className="rounded-2xl border border-sage/20 bg-[#fffaf2] p-4">
-                      <p className="text-sm font-semibold text-clay">{title}</p>
-                      <p className="mt-1 text-sm text-clay/75">{desc}</p>
+                  {appGuideContent.architecture.layers.map((layer) => (
+                    <div key={layer.id} className="rounded-2xl border border-sage/20 bg-[#fffaf2] p-4">
+                      <div className="flex items-center justify-between gap-3">
+                        <p className="text-sm font-semibold text-clay">{layer.title}</p>
+                        <span className="rounded-full bg-white px-2.5 py-1 text-[11px] font-bold text-clay/70">
+                          {layer.level}
+                        </span>
+                      </div>
+                      <p className="mt-2 text-sm text-clay/75">{layer.summary}</p>
                     </div>
                   ))}
+                </div>
+                <div className="mt-3 rounded-2xl border border-sage/20 bg-[#fffaf2] p-4">
+                  <p className="text-sm font-semibold text-clay">{txt(lang, "Risk bypass", "风险旁路")}</p>
+                  <p className="mt-1 text-sm text-clay/75">{appGuideContent.architecture.callouts[1].items.join(" -> ")}</p>
                 </div>
               </Card>
             </div>
 
-            <Card style={style}>
+            <Card id="profile-docs-phase" style={style}>
               <SectionTitle
                 title={txt(lang, "AI mechanism and phase mapping", "AI 机制与阶段判断")}
                 subtitle={txt(lang, "Show what is already landed and what is not finished yet.", "说明当前已经落地什么、还不是什么。")}
@@ -1182,9 +1198,6 @@ export default function ProfileTab({
             </Card>
           </div>
         )}
-
-=======
->>>>>>> 356bd4d38d8b7f31d8a35a177e59ac40d7d6cf8a
         {activePage === "help" && (
           <Card style={style}>
             <SectionTitle
@@ -1208,7 +1221,6 @@ export default function ProfileTab({
                 </p>
               )}
             </div>
-<<<<<<< HEAD
             <div className="mt-4 grid gap-2 sm:grid-cols-2">
               <button
                 type="button"
@@ -1225,8 +1237,6 @@ export default function ProfileTab({
                 {txt(lang, "Open version notes", "打开版本说明")}
               </button>
             </div>
-=======
->>>>>>> 356bd4d38d8b7f31d8a35a177e59ac40d7d6cf8a
             <p className="mt-3 text-xs text-clay/65">Rihea {helpCenter.version || "v1.0.0"}</p>
           </Card>
         )}

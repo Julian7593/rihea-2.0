@@ -6,10 +6,7 @@ import {
   PARTNER_SHARING_LEVEL,
   PARTNER_SYNC_STATUS,
 } from "../utils/partnerSync";
-<<<<<<< HEAD
 import { appVersionInfo } from "../data/appMeta.js";
-=======
->>>>>>> 356bd4d38d8b7f31d8a35a177e59ac40d7d6cf8a
 import {
   buildPartnerBindingRequest,
   buildPartnerSyncSettingsRequest,
@@ -148,11 +145,7 @@ const mockDb = {
       { id: "faq-2", title: "How partner sync works", desc: "Enable partner sync in quick settings." },
       { id: "faq-3", title: "How to export report", desc: "Use export button in health records page." },
     ],
-<<<<<<< HEAD
     version: appVersionInfo.currentVersion,
-=======
-    version: "v1.0.0",
->>>>>>> 356bd4d38d8b7f31d8a35a177e59ac40d7d6cf8a
     contacts: [
       { id: "ec-1", title: "Primary emergency contact", phone: "+86 138-0000-0000" },
       { id: "ec-2", title: "Hospital hotline", phone: "400-000-1120" },

@@ -34,7 +34,6 @@ server/data/partner-sync-state.local.json
 
 This file is ignored by git and will be created automatically on first run.
 
-<<<<<<< HEAD
 Unified knowledge runtime files:
 
 ```text
@@ -43,8 +42,6 @@ server/kb/knowledge-connectors.local.json
 server/kb/feishu-knowledge.local.json
 ```
 
-=======
->>>>>>> 356bd4d38d8b7f31d8a35a177e59ac40d7d6cf8a
 ## Implemented Routes
 
 - `GET /health`
@@ -55,9 +52,6 @@ server/kb/feishu-knowledge.local.json
 - `PATCH /v1/partner-sync/settings`
 - `PATCH /v1/partner-sync/tasks`
 - `POST /v1/partner-sync/unbind`
-<<<<<<< HEAD
 - `GET /v1/knowledge/overview`
 - `POST /v1/knowledge/search`
 - `GET /v1/knowledge/documents/:documentId`
-=======
->>>>>>> 356bd4d38d8b7f31d8a35a177e59ac40d7d6cf8a

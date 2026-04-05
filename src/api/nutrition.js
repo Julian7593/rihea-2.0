@@ -3,16 +3,10 @@
  * 处理饮食相关的API请求
  */
 
-<<<<<<< HEAD
 import { apiRequest, hasRemoteApi } from "./client.js";
 import { apiContracts } from "./contracts.js";
 import { createDietRecord, getDietRecords } from "../utils/recordStorage.js";
 import { buildFoodPhotoAnalysisFallback, generateNutritionAdvice } from "../utils/nutritionCalculator.js";
-=======
-import { apiContracts, apiRequest, hasRemoteApi } from "./client.js";
-import { createDietRecord, getDietRecords, getTodayDietRecords } from "../utils/recordStorage.js";
-import { generateNutritionAdvice } from "../utils/nutritionCalculator.js";
->>>>>>> 356bd4d38d8b7f31d8a35a177e59ac40d7d6cf8a
 
 const wait = (ms = 220) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -21,7 +15,6 @@ async function ensureDataReady() {
   await wait(100);
 }
 
-<<<<<<< HEAD
 function fileToDataUrl(file) {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
@@ -31,8 +24,6 @@ function fileToDataUrl(file) {
   });
 }
 
-=======
->>>>>>> 356bd4d38d8b7f31d8a35a177e59ac40d7d6cf8a
 /**
  * 获取今日饮食建议
  */
@@ -157,7 +148,6 @@ export async function deleteDietRecord(id, options = {}) {
     throw error;
   }
 }
-<<<<<<< HEAD
 
 /**
  * 拍照识别餐食并生成孕期提醒
@@ -198,5 +188,3 @@ export async function analyzeMealPhoto(file, context = {}, options = {}) {
     },
   });
 }
-=======
->>>>>>> 356bd4d38d8b7f31d8a35a177e59ac40d7d6cf8a

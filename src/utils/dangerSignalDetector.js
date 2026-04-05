@@ -122,7 +122,6 @@ const generalDangerSignals = [
     },
     action: "立即停止活动，左侧卧休息，数胎动1小时，如不改善立即就医",
   },
-<<<<<<< HEAD
   {
     id: "user_reported_self_harm_risk",
     type: DANGER_SIGNAL_TYPES.EMERGENCY,
@@ -167,8 +166,6 @@ const generalDangerSignals = [
     },
     action: "请立即联系专业人员并确保身边有人陪同，如存在急性风险立即就医。",
   },
-=======
->>>>>>> 356bd4d38d8b7f31d8a35a177e59ac40d7d6cf8a
 ];
 
 /**

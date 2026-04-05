@@ -5,10 +5,7 @@ export const CHECKIN_SLEEP_HOURS_STEP = 0.5;
 export const CHECKIN_SLEEP_SOURCE_MANUAL = "manual";
 export const CHECKIN_SLEEP_SOURCE_HEALTHKIT = "healthkit";
 export const CHECKIN_SLEEP_SOURCE_GOOGLE_FIT = "google_fit";
-<<<<<<< HEAD
 const DATE_KEY_PATTERN = /^\d{4}-\d{2}-\d{2}$/;
-=======
->>>>>>> 356bd4d38d8b7f31d8a35a177e59ac40d7d6cf8a
 
 const VALID_SLEEP_SOURCES = new Set([
   CHECKIN_SLEEP_SOURCE_MANUAL,
@@ -23,7 +20,6 @@ export const toDateKey = (date) => {
   return `${year}-${month}-${day}`;
 };
 
-<<<<<<< HEAD
 export const isDateKey = (value) => typeof value === "string" && DATE_KEY_PATTERN.test(value);
 
 export const parseDateKey = (value) => {
@@ -48,8 +44,6 @@ export const diffDateKeys = (left, right) => {
   return Math.round((leftDate.getTime() - rightDate.getTime()) / dayMs);
 };
 
-=======
->>>>>>> 356bd4d38d8b7f31d8a35a177e59ac40d7d6cf8a
 const coerceSleepHours = (value) => {
   if (value === null || value === undefined) return null;
   if (typeof value === "string" && value.trim() === "") return null;
@@ -92,11 +86,7 @@ const normalizeEntry = (entry) => {
       : sleepHours === null
         ? ""
         : CHECKIN_SLEEP_SOURCE_MANUAL;
-<<<<<<< HEAD
   if (!isDateKey(date) || !parseDateKey(date)) return null;
-=======
-  if (!/^\d{4}-\d{2}-\d{2}$/.test(date)) return null;
->>>>>>> 356bd4d38d8b7f31d8a35a177e59ac40d7d6cf8a
   if (mood < 0 || mood > 4) return null;
   return {
     date,
@@ -147,7 +137,6 @@ export const calcCheckInStreak = (entries) => {
 
   return streak;
 };
-<<<<<<< HEAD
 
 export const getRecentCheckIns = (entries, days = 7, now = new Date()) => {
   const safeEntries = Array.isArray(entries) ? entries.filter(Boolean) : [];
@@ -172,5 +161,3 @@ export const calcCheckInCoverage = (entries, days = 7, now = new Date()) => {
     recentEntries: recent.length,
   };
 };
-=======
->>>>>>> 356bd4d38d8b7f31d8a35a177e59ac40d7d6cf8a

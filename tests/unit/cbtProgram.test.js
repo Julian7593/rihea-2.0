@@ -44,7 +44,6 @@ describe("cbt program utilities", () => {
         checkIns: createLowRiskCheckIns(),
       }).level
     ).toBe(CBT_CARE_LEVEL.LEVEL_3);
-<<<<<<< HEAD
 
     expect(
       determineCbtCareLevel({
@@ -52,8 +51,6 @@ describe("cbt program utilities", () => {
         checkIns: createLowRiskCheckIns(),
       }).level
     ).toBe(CBT_CARE_LEVEL.LEVEL_3);
-=======
->>>>>>> 356bd4d38d8b7f31d8a35a177e59ac40d7d6cf8a
   });
 
   it("moves the sleep module earlier when insomnia is high", () => {
@@ -151,7 +148,3 @@ describe("cbt program utilities", () => {
     expect(partnerFeed.tasks[0].title).toContain("安全");
   });
 });
-<<<<<<< HEAD
-=======
-
->>>>>>> 356bd4d38d8b7f31d8a35a177e59ac40d7d6cf8a

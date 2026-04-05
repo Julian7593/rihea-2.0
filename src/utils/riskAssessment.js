@@ -1,21 +1,14 @@
 // Risk Assessment Utilities for Emotional Health
 
-<<<<<<< HEAD
 import { calcCheckInCoverage, getRecentCheckIns, toDateKey } from "./checkin.js";
 import { detectDangerSignalsInText } from "./dangerSignalDetector.js";
 
-=======
-/**
- * Risk level definitions
- */
->>>>>>> 356bd4d38d8b7f31d8a35a177e59ac40d7d6cf8a
 export const RISK_LEVELS = {
   LOW: "low",
   MEDIUM: "medium",
   HIGH: "high",
 };
 
-<<<<<<< HEAD
 export const ALERT_LEVELS = {
   NONE: "none",
   WATCH: "watch",
@@ -30,29 +23,17 @@ const LEVEL_ORDER = {
 
 const CBT_VALIDITY_DAYS = 14;
 
-=======
-/**
- * Risk level configurations
- */
->>>>>>> 356bd4d38d8b7f31d8a35a177e59ac40d7d6cf8a
 export const RISK_LEVEL_CONFIG = {
   [RISK_LEVELS.LOW]: {
     label: { zh: "低风险", en: "Low Risk" },
     color: "bg-green-500",
     textColor: "text-green-600",
     borderColor: "border-green-500",
-<<<<<<< HEAD
     accent: "#22c55e",
     scoreRange: [0, 30],
     recommendation: {
       zh: "情绪状态总体稳定，继续保持规律打卡、睡眠和支持网络。",
       en: "Emotional state looks broadly stable. Keep consistent check-ins, sleep, and support routines.",
-=======
-    scoreRange: [0, 30],
-    recommendation: {
-      zh: "情绪状态良好，继续保持健康的生活习惯。",
-      en: "Emotional state is good, maintain healthy habits.",
->>>>>>> 356bd4d38d8b7f31d8a35a177e59ac40d7d6cf8a
     },
     expertType: ["midwife", "nutritionist"],
   },
@@ -61,18 +42,11 @@ export const RISK_LEVEL_CONFIG = {
     color: "bg-yellow-500",
     textColor: "text-yellow-600",
     borderColor: "border-yellow-500",
-<<<<<<< HEAD
     accent: "#eab308",
     scoreRange: [31, 60],
     recommendation: {
       zh: "建议增加观察频率，并尽快安排一次专业沟通或筛查复评。",
       en: "Increase monitoring and consider arranging a professional check-in or reassessment soon.",
-=======
-    scoreRange: [31, 60],
-    recommendation: {
-      zh: "建议进行心理疏导，尝试放松练习，必要时咨询专业人士。",
-      en: "Consider psychological counseling and relaxation exercises, consult a professional if needed.",
->>>>>>> 356bd4d38d8b7f31d8a35a177e59ac40d7d6cf8a
     },
     expertType: ["psychologist", "midwife"],
   },
@@ -81,24 +55,16 @@ export const RISK_LEVEL_CONFIG = {
     color: "bg-red-500",
     textColor: "text-red-600",
     borderColor: "border-red-500",
-<<<<<<< HEAD
     accent: "#ef4444",
     scoreRange: [61, 100],
     recommendation: {
       zh: "当前更适合优先获得专业支持，并尽快完成安全确认与临床协作。",
       en: "Professional support should be prioritized now, together with a safety check and clinical follow-up.",
-=======
-    scoreRange: [61, 100],
-    recommendation: {
-      zh: "建议立即寻求专业心理医生或产科医生的帮助。",
-      en: "Seek immediate help from a psychologist or obstetrician.",
->>>>>>> 356bd4d38d8b7f31d8a35a177e59ac40d7d6cf8a
     },
     expertType: ["psychologist", "obstetrician"],
   },
 };
 
-<<<<<<< HEAD
 const fallbackText = (lang, zh, en) => (lang === "en" ? en : zh);
 
 const clampScore = (value) => Math.max(0, Math.min(100, Math.round(Number(value) || 0)));
@@ -133,43 +99,11 @@ function calcConsecutiveLowMoodDays(entries, now = new Date()) {
     consecutiveDays += 1;
     const cursorDate = new Date(now.getFullYear(), now.getMonth(), now.getDate() - consecutiveDays);
     cursorKey = toDateKey(cursorDate);
-=======
-/**
- * Calculate consecutive low mood days
- * @param {Array} entries - Check-in entries sorted by date (descending)
- * @returns {number} Number of consecutive low mood days
- */
-function calcConsecutiveLowMoodDays(entries) {
-  const LOW_MOOD_THRESHOLD = 1; // mood <= 1 is considered low
-  const today = new Date();
-  let consecutiveDays = 0;
-
-  // Check from today backwards
-  for (let i = 0; i < 30; i++) {
-    const dateToCheck = new Date(today);
-    dateToCheck.setDate(dateToCheck.getDate() - i);
-    const dateKey = dateToCheck.toISOString().slice(0, 10);
-
-    const entry = entries.find(e => e.date === dateKey);
-
-    if (!entry) {
-      // Missing day breaks the streak if we haven't started counting yet
-      if (consecutiveDays === 0) continue;
-      break;
-    }
-
-    if (entry.mood <= LOW_MOOD_THRESHOLD) {
-      consecutiveDays++;
-    } else {
-      break;
-    }
->>>>>>> 356bd4d38d8b7f31d8a35a177e59ac40d7d6cf8a
   }
 
   return consecutiveDays;
 }
 
-<<<<<<< HEAD
 function calcAverageMood(entries) {
   if (!entries.length) return null;
   const sum = entries.reduce((acc, entry) => acc + entry.mood, 0);
@@ -275,157 +209,30 @@ export function computeDynamicRisk({ checkIns = [], lang = "zh", now = new Date(
 
   if (consecutiveLowMoodDays > 0) {
     const weight = Math.min(48, consecutiveLowMoodDays * 12);
-=======
-/**
- * Calculate average mood over recent period
- * @param {Array} entries - Check-in entries
- * @param {number} days - Number of days to look back (default: 7)
- * @returns {number} Average mood score (0-4) or null if no data
- */
-function calcAverageMood(entries, days = 7) {
-  const thresholdDate = new Date();
-  thresholdDate.setDate(thresholdDate.getDate() - days + 1);
-
-  const recentEntries = entries.filter(e => {
-    const entryDate = new Date(e.date);
-    return entryDate >= thresholdDate;
-  });
-
-  if (recentEntries.length === 0) return null;
-
-  const sum = recentEntries.reduce((acc, e) => acc + e.mood, 0);
-  return sum / recentEntries.length;
-}
-
-/**
- * Calculate sleep quality score
- * @param {Array} entries - Check-in entries
- * @param {number} days - Number of days to look back (default: 7)
- * @returns {number} Sleep quality score (0-100) or null if no data
- */
-function calcSleepQualityScore(entries, days = 7) {
-  const thresholdDate = new Date();
-  thresholdDate.setDate(thresholdDate.getDate() - days + 1);
-
-  const recentEntries = entries.filter(e => {
-    const entryDate = new Date(e.date);
-    return entryDate >= thresholdDate && e.sleepHours !== null;
-  });
-
-  if (recentEntries.length === 0) return null;
-
-  // Calculate average sleep hours
-  const avgSleep = recentEntries.reduce((acc, e) => acc + e.sleepHours, 0) / recentEntries.length;
-
-  // Ideal sleep is 8 hours, calculate score
-  const diff = Math.abs(avgSleep - 8);
-  const score = Math.max(0, 100 - diff * 15); // Each hour difference reduces score by 15
-
-  return Math.round(score);
-}
-
-/**
- * Count mood extremes (very low or very high)
- * @param {Array} entries - Check-in entries
- * @param {number} days - Number of days to look back (default: 7)
- * @returns {number} Count of extreme mood events
- */
-function calcMoodExtremeCount(entries, days = 7) {
-  const thresholdDate = new Date();
-  thresholdDate.setDate(thresholdDate.getDate() - days + 1);
-
-  const recentEntries = entries.filter(e => {
-    const entryDate = new Date(e.date);
-    return entryDate >= thresholdDate;
-  });
-
-  // Count extreme moods (0 or 4)
-  return recentEntries.filter(e => e.mood === 0 || e.mood === 4).length;
-}
-
-/**
- * Assess emotional risk based on check-in data
- * @param {Object} profile - User profile containing check-in data
- * @returns {Object} Risk assessment result
- */
-export function assessEmotionalRisk(profile) {
-  const entries = profile?.checkIns || [];
-  const lang = profile?.lang || "zh";
-
-  // If no data, return low risk with a note
-  if (entries.length === 0) {
-    return {
-      level: RISK_LEVELS.LOW,
-      score: 0,
-      factors: [
-        {
-          type: "no_data",
-          weight: 0,
-          description: {
-            zh: "暂无足够数据进行评估，请继续记录打卡数据。",
-            en: "Not enough data for assessment, please continue check-in.",
-          },
-        },
-      ],
-      recommendation: RISK_LEVEL_CONFIG[RISK_LEVELS.LOW].recommendation[lang],
-      expertTypes: RISK_LEVEL_CONFIG[RISK_LEVELS.LOW].expertType,
-      hasData: false,
-    };
-  }
-
-  // Calculate risk factors
-  const consecutiveLowMoodDays = calcConsecutiveLowMoodDays(entries);
-  const avgMood = calcAverageMood(entries);
-  const sleepQuality = calcSleepQualityScore(entries);
-  const moodExtremeCount = calcMoodExtremeCount(entries);
-
-  const factors = [];
-
-  // Factor 1: Consecutive low mood days (weight: 10 per day)
-  if (consecutiveLowMoodDays > 0) {
-    const weight = Math.min(50, consecutiveLowMoodDays * 10);
->>>>>>> 356bd4d38d8b7f31d8a35a177e59ac40d7d6cf8a
     factors.push({
       type: "consecutive_low_mood",
       weight,
       value: consecutiveLowMoodDays,
       description: {
-<<<<<<< HEAD
         zh: `连续${consecutiveLowMoodDays}天记录到低情绪`,
         en: `${consecutiveLowMoodDays} consecutive recorded days with low mood`,
-=======
-        zh: `连续${consecutiveLowMoodDays}天低情绪`,
-        en: `${consecutiveLowMoodDays} consecutive days with low mood`,
->>>>>>> 356bd4d38d8b7f31d8a35a177e59ac40d7d6cf8a
       },
     });
   }
 
-<<<<<<< HEAD
   if (avgMood !== null && avgMood < 2) {
     const weight = Math.min(28, Math.round((2 - avgMood) * 20));
-=======
-  // Factor 2: Average mood (inverse: lower mood = higher risk)
-  if (avgMood !== null && avgMood < 2) {
-    const weight = Math.round((2 - avgMood) * 20);
->>>>>>> 356bd4d38d8b7f31d8a35a177e59ac40d7d6cf8a
     factors.push({
       type: "low_average_mood",
       weight,
       value: avgMood.toFixed(1),
       description: {
-<<<<<<< HEAD
         zh: `近7天平均情绪偏低 (${avgMood.toFixed(1)}/4)`,
         en: `Low average mood over the past 7 days (${avgMood.toFixed(1)}/4)`,
-=======
-        zh: `近期平均情绪值较低 (${avgMood.toFixed(1)}/4)`,
-        en: `Low recent average mood (${avgMood.toFixed(1)}/4)`,
->>>>>>> 356bd4d38d8b7f31d8a35a177e59ac40d7d6cf8a
       },
     });
   }
 
-<<<<<<< HEAD
   if (sleep.avgSleepHours !== null && (sleep.avgSleepHours < 6 || sleep.avgSleepHours > 9.5)) {
     const weight = Math.min(22, Math.round(Math.abs(sleep.avgSleepHours - 8) * 8));
     factors.push({
@@ -435,23 +242,10 @@ export function assessEmotionalRisk(profile) {
       description: {
         zh: `近7天平均睡眠时长偏离理想区间 (${sleep.avgSleepHours}h)`,
         en: `Average sleep duration is outside the ideal range (${sleep.avgSleepHours}h)`,
-=======
-  // Factor 3: Sleep quality (inverse: poorer sleep = higher risk)
-  if (sleepQuality !== null && sleepQuality < 60) {
-    const weight = Math.round((60 - sleepQuality) * 0.8);
-    factors.push({
-      type: "poor_sleep",
-      weight,
-      value: sleepQuality,
-      description: {
-        zh: `睡眠质量评分偏低 (${sleepQuality}/100)`,
-        en: `Low sleep quality score (${sleepQuality}/100)`,
->>>>>>> 356bd4d38d8b7f31d8a35a177e59ac40d7d6cf8a
       },
     });
   }
 
-<<<<<<< HEAD
   if (sleep.sleepVariability !== null && sleep.sleepVariability >= 1.5) {
     const weight = Math.min(16, Math.round((sleep.sleepVariability - 1.4) * 8));
     factors.push({
@@ -467,28 +261,17 @@ export function assessEmotionalRisk(profile) {
 
   if (moodExtremeCount >= 2) {
     const weight = Math.min(18, moodExtremeCount * 6);
-=======
-  // Factor 4: Mood extremes (weight: 8 per extreme)
-  if (moodExtremeCount > 0) {
-    const weight = Math.min(30, moodExtremeCount * 8);
->>>>>>> 356bd4d38d8b7f31d8a35a177e59ac40d7d6cf8a
     factors.push({
       type: "mood_extremes",
       weight,
       value: moodExtremeCount,
       description: {
-<<<<<<< HEAD
         zh: `近7天出现${moodExtremeCount}次情绪极值`,
         en: `${moodExtremeCount} extreme mood events over the past 7 days`,
-=======
-        zh: `近期情绪波动较大 (${moodExtremeCount}次极值)`,
-        en: `High mood volatility (${moodExtremeCount} extreme events)`,
->>>>>>> 356bd4d38d8b7f31d8a35a177e59ac40d7d6cf8a
       },
     });
   }
 
-<<<<<<< HEAD
   if (uniqueNoteSignals.length > 0) {
     factors.push({
       type: "danger_note_signal",
@@ -734,102 +517,10 @@ export function shouldTriggerEmergencyAlert(profile) {
   return assessEmotionalRisk(profile)?.alert?.triggered === true;
 }
 
-=======
-  // Calculate total score
-  const totalScore = factors.reduce((sum, f) => sum + f.weight, 0);
-
-  // Determine risk level
-  let riskLevel;
-  if (totalScore <= RISK_LEVEL_CONFIG[RISK_LEVELS.LOW].scoreRange[1]) {
-    riskLevel = RISK_LEVELS.LOW;
-  } else if (totalScore <= RISK_LEVEL_CONFIG[RISK_LEVELS.MEDIUM].scoreRange[1]) {
-    riskLevel = RISK_LEVELS.MEDIUM;
-  } else {
-    riskLevel = RISK_LEVELS.HIGH;
-  }
-
-  const config = RISK_LEVEL_CONFIG[riskLevel];
-
-  return {
-    level: riskLevel,
-    score: Math.min(100, totalScore),
-    factors,
-    recommendation: config.recommendation[lang],
-    expertTypes: config.expertType,
-    hasData: true,
-    // Additional context
-    metrics: {
-      consecutiveLowMoodDays,
-      avgMood: avgMood?.toFixed(1),
-      sleepQuality,
-      moodExtremeCount,
-    },
-  };
-}
-
-/**
- * Check if emergency alert should be triggered
- * @param {Object} profile - User profile
- * @returns {boolean} True if emergency alert should be triggered
- */
-export function shouldTriggerEmergencyAlert(profile) {
-  const risk = assessEmotionalRisk(profile);
-
-  // Emergency conditions:
-  // 1. High risk level
-  // 2. More than 7 consecutive low mood days
-  // 3. Has valid data
-
-  if (!risk.hasData) return false;
-
-  if (risk.level === RISK_LEVELS.HIGH) {
-    return true;
-  }
-
-  if (risk.metrics.consecutiveLowMoodDays >= 7) {
-    return true;
-  }
-
-  // Check for danger indicators in notes
-  const entries = profile?.checkIns || [];
-  const dangerKeywords = [
-    "自杀", "suicide", "结束", "end it", "不想活", "die",
-    "解脱", "escape", "放弃", "give up",
-  ];
-
-  for (const entry of entries) {
-    if (entry.note) {
-      const noteLower = entry.note.toLowerCase();
-      for (const keyword of dangerKeywords) {
-        if (noteLower.includes(keyword)) {
-          return true;
-        }
-      }
-    }
-  }
-
-  return false;
-}
-
-/**
- * Get recommended expert types based on risk level
- * @param {string} riskLevel - Risk level (low, medium, high)
- * @returns {Array<string>} Array of recommended expert types
- */
->>>>>>> 356bd4d38d8b7f31d8a35a177e59ac40d7d6cf8a
 export function getRecommendedExpertTypes(riskLevel) {
   return RISK_LEVEL_CONFIG[riskLevel]?.expertType || [];
 }
 
-<<<<<<< HEAD
-=======
-/**
- * Get risk level configuration
- * @param {string} riskLevel - Risk level (low, medium, high)
- * @param {string} lang - Language code (zh or en)
- * @returns {Object} Risk level configuration
- */
->>>>>>> 356bd4d38d8b7f31d8a35a177e59ac40d7d6cf8a
 export function getRiskLevelConfig(riskLevel, lang = "zh") {
   const config = RISK_LEVEL_CONFIG[riskLevel];
   if (!config) return null;
@@ -840,27 +531,19 @@ export function getRiskLevelConfig(riskLevel, lang = "zh") {
     color: config.color,
     textColor: config.textColor,
     borderColor: config.borderColor,
-<<<<<<< HEAD
     accent: config.accent,
-=======
->>>>>>> 356bd4d38d8b7f31d8a35a177e59ac40d7d6cf8a
     recommendation: config.recommendation[lang],
     scoreRange: config.scoreRange,
   };
 }
 
 export default {
-<<<<<<< HEAD
   ALERT_LEVELS,
   RISK_LEVELS,
   RISK_LEVEL_CONFIG,
   computeClinicalRisk,
   computeDynamicRisk,
   mergeRiskDecision,
-=======
-  RISK_LEVELS,
-  RISK_LEVEL_CONFIG,
->>>>>>> 356bd4d38d8b7f31d8a35a177e59ac40d7d6cf8a
   assessEmotionalRisk,
   shouldTriggerEmergencyAlert,
   getRecommendedExpertTypes,
