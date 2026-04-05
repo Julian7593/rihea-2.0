@@ -30,8 +30,22 @@ import {
   fetchPartnerHomeCard,
   patchFetalMovementRecord,
 } from "../../api/profile";
+<<<<<<< HEAD
 import HomePartnerCard from "../partner/HomePartnerCard";
 import HomeCbtCard from "../cbt/HomeCbtCard";
+=======
+import { fetchCbtOverview } from "../../api/cbt";
+import HomePartnerCard from "../partner/HomePartnerCard";
+import HomeCbtCard from "../cbt/HomeCbtCard";
+// 新增：饮食和运动相关导入
+import DietAdviceCard from "../nutrition/DietAdviceCard";
+import ExerciseAdviceCard from "../fitness/ExerciseAdviceCard";
+import MealRecordModal from "../nutrition/MealRecordModal";
+import ExerciseCheckinModal from "../fitness/ExerciseCheckinModal";
+import { generateNutritionAdvice } from "../../utils/nutritionCalculator";
+import { getTodayExerciseQuickView } from "../../utils/fitnessRecommender";
+import { createDietRecord, createExerciseRecord, getTodaySummary } from "../../utils/recordStorage";
+>>>>>>> 356bd4d38d8b7f31d8a35a177e59ac40d7d6cf8a
 
 const FetalMovementPage = lazy(() => import("./FetalMovementPage"));
 const WeeklyMoodChart = lazy(() => import("./WeeklyMoodChart"));
@@ -404,6 +418,7 @@ const BreathingWidget = memo(function BreathingWidget({
   );
 });
 
+<<<<<<< HEAD
 function HomeCareMiniCard({ style, title, desc, meta, badge, buttonLabel, onOpen }) {
   return (
     <Card style={style}>
@@ -437,6 +452,8 @@ function HomeCareMiniCard({ style, title, desc, meta, badge, buttonLabel, onOpen
   );
 }
 
+=======
+>>>>>>> 356bd4d38d8b7f31d8a35a177e59ac40d7d6cf8a
 function HomeTab({
   lang,
   style,
@@ -450,8 +467,11 @@ function HomeTab({
   onFocusConsumed,
   onOpenPartnerCenter,
   onOpenCbtCenter,
+<<<<<<< HEAD
   onOpenCareSection,
   careWellness,
+=======
+>>>>>>> 356bd4d38d8b7f31d8a35a177e59ac40d7d6cf8a
   cbtRefreshToken = 0,
 }) {
   const [mood, setMood] = useState(2);
@@ -473,6 +493,7 @@ function HomeTab({
   const [belowFoldReady, setBelowFoldReady] = useState(false);
   const [partnerHomeCard, setPartnerHomeCard] = useState(null);
   const [partnerCardLoading, setPartnerCardLoading] = useState(true);
+<<<<<<< HEAD
   const toast = useToast();
   const {
     dietAdvice,
@@ -481,6 +502,20 @@ function HomeTab({
     cbtOverview,
     cbtLoading,
   } = careWellness || {};
+=======
+  const [cbtOverview, setCbtOverview] = useState(null);
+  const [cbtLoading, setCbtLoading] = useState(true);
+  const toast = useToast();
+
+  // 新增：饮食和运动相关state
+  const [dietAdvice, setDietAdvice] = useState(null);
+  const [exerciseAdvice, setExerciseAdvice] = useState(null);
+  const [showMealModal, setShowMealModal] = useState(false);
+  const [showExerciseModal, setShowExerciseModal] = useState(false);
+  const [selectedMealType, setSelectedMealType] = useState(null);
+  const [selectedExerciseTask, setSelectedExerciseTask] = useState(null);
+  const [todaySummary, setTodaySummary] = useState(null);
+>>>>>>> 356bd4d38d8b7f31d8a35a177e59ac40d7d6cf8a
 
   const labels = useMemo(
     () =>
@@ -522,6 +557,7 @@ function HomeTab({
     const normalized = normalizeSleepHours(sleepHours, 7.5);
     return Number.isInteger(normalized) ? String(normalized) : normalized.toFixed(1);
   }, [sleepHours]);
+<<<<<<< HEAD
   const nutritionMiniText = useMemo(() => {
     const mealsLogged = todaySummary?.diet?.mealsLogged || 0;
     const proteinPercent = todaySummary?.diet?.nutrition?.protein?.percent || 0;
@@ -553,6 +589,8 @@ function HomeTab({
       `今天已完成 ${completed} 项运动，去关怀页继续打卡或查看本周进度。`
     );
   }, [exerciseMainTask, lang, todaySummary]);
+=======
+>>>>>>> 356bd4d38d8b7f31d8a35a177e59ac40d7d6cf8a
   const pregnancyDay = parsedWeek.week * 7 + parsedWeek.day;
   const dueCountdownText = useMemo(() => {
     if (!dueDateLabel) return txt(lang, "No due date set", "未设置预产期");
@@ -606,6 +644,39 @@ function HomeTab({
 
   useEffect(() => {
     let cancelled = false;
+<<<<<<< HEAD
+=======
+    const loadCbtOverview = async () => {
+      setCbtLoading(true);
+      try {
+        const data = await fetchCbtOverview({
+          lang,
+          profile,
+          checkIns,
+        });
+        if (!cancelled) {
+          setCbtOverview(data);
+        }
+      } catch {
+        if (!cancelled) {
+          setCbtOverview(null);
+        }
+      } finally {
+        if (!cancelled) {
+          setCbtLoading(false);
+        }
+      }
+    };
+
+    loadCbtOverview();
+    return () => {
+      cancelled = true;
+    };
+  }, [cbtRefreshToken, checkIns, lang, profile]);
+
+  useEffect(() => {
+    let cancelled = false;
+>>>>>>> 356bd4d38d8b7f31d8a35a177e59ac40d7d6cf8a
     const loadPartnerCard = async () => {
       setPartnerCardLoading(true);
       try {
@@ -634,6 +705,76 @@ function HomeTab({
     };
   }, [checkIns, lang, profile]);
 
+<<<<<<< HEAD
+=======
+  // 新增：生成饮食和运动建议
+  useEffect(() => {
+    if (!profile) return;
+
+    // 生成饮食建议
+    const dietAdviceData = generateNutritionAdvice(profile);
+    setDietAdvice(dietAdviceData);
+
+    // 生成运动建议
+    const dayNames = ["周日", "周一", "周二", "周三", "周四", "周五", "周六"];
+    const currentDay = dayNames[new Date().getDay()];
+    const exerciseAdviceData = getTodayExerciseQuickView(profile);
+    setExerciseAdvice(exerciseAdviceData);
+  }, [profile]);
+
+  // 新增：获取今日记录总结
+  useEffect(() => {
+    const summary = getTodaySummary();
+    setTodaySummary(summary);
+  }, []);
+
+  // 新增：处理饮食记录
+  const handleRecordMeal = useCallback((mealType) => {
+    setSelectedMealType(mealType);
+    setShowMealModal(true);
+  }, []);
+
+  const handleSaveDietRecord = useCallback((record) => {
+    createDietRecord(record);
+    setShowMealModal(false);
+    setSelectedMealType(null);
+
+    // 刷新今日记录
+    const summary = getTodaySummary();
+    setTodaySummary(summary);
+
+    toast.success(
+      lang === "zh" ? "饮食记录成功！" : "Meal recorded successfully!"
+    );
+  }, [lang, toast]);
+
+  // 新增：处理运动打卡
+  const handleCheckinExercise = useCallback((task) => {
+    setSelectedExerciseTask(task);
+    setShowExerciseModal(true);
+  }, []);
+
+  const handleSaveExerciseRecord = useCallback((record, hasDangerSymptom) => {
+    createExerciseRecord(record);
+    setShowExerciseModal(false);
+    setSelectedExerciseTask(null);
+
+    // 刷新今日记录
+    const summary = getTodaySummary();
+    setTodaySummary(summary);
+
+    if (hasDangerSymptom) {
+      toast.warning(
+        lang === "zh" ? "请注意身体不适" : "Please monitor your symptoms"
+      );
+    } else {
+      toast.success(
+        lang === "zh" ? "运动打卡成功！" : "Exercise recorded successfully!"
+      );
+    }
+  }, [lang, toast]);
+
+>>>>>>> 356bd4d38d8b7f31d8a35a177e59ac40d7d6cf8a
   useEffect(() => {
     if (!movementFeedback) return undefined;
     const timer = window.setTimeout(() => setMovementFeedback(""), 2200);
@@ -1135,6 +1276,7 @@ function HomeTab({
         onOpen={onOpenPartnerCenter}
       />
 
+<<<<<<< HEAD
       <HomeCareMiniCard
         style={style}
         badge={txt(lang, "Supportive Self-Care", "支持性自我照护")}
@@ -1154,6 +1296,23 @@ function HomeTab({
         buttonLabel={txt(lang, "Open Care movement", "去关怀页打卡运动")}
         onOpen={() => onOpenCareSection?.("exercise")}
       />
+=======
+      {/* 新增：饮食建议卡片 */}
+      {dietAdvice && (
+        <DietAdviceCard
+          advice={dietAdvice}
+          onRecordMeal={handleRecordMeal}
+        />
+      )}
+
+      {/* 新增：运动建议卡片 */}
+      {exerciseAdvice && (
+        <ExerciseAdviceCard
+          advice={exerciseAdvice}
+          onCheckin={handleCheckinExercise}
+        />
+      )}
+>>>>>>> 356bd4d38d8b7f31d8a35a177e59ac40d7d6cf8a
 
       <HomeCbtCard
         lang={lang}
@@ -1204,7 +1363,11 @@ function HomeTab({
       </Card>
 
       <Card style={style}>
+<<<<<<< HEAD
         <button type="button" onClick={() => onOpenCareSection?.("support")} className="flex w-full items-center justify-between">
+=======
+        <button type="button" className="flex w-full items-center justify-between">
+>>>>>>> 356bd4d38d8b7f31d8a35a177e59ac40d7d6cf8a
           <span className="inline-flex items-center gap-2 text-sm font-semibold text-clay">
             <span
               className="grid h-8 w-8 place-items-center rounded-full"
@@ -1217,6 +1380,29 @@ function HomeTab({
           <ChevronRight className="h-4 w-4 text-clay/60" />
         </button>
       </Card>
+<<<<<<< HEAD
+=======
+
+      {/* 新增：饮食记录弹窗 */}
+      {showMealModal && (
+        <MealRecordModal
+          isOpen={showMealModal}
+          onClose={() => setShowMealModal(false)}
+          onSave={handleSaveDietRecord}
+          mealType={selectedMealType}
+        />
+      )}
+
+      {/* 新增：运动打卡弹窗 */}
+      {showExerciseModal && selectedExerciseTask && (
+        <ExerciseCheckinModal
+          isOpen={showExerciseModal}
+          onClose={() => setShowExerciseModal(false)}
+          onSave={handleSaveExerciseRecord}
+          task={selectedExerciseTask}
+        />
+      )}
+>>>>>>> 356bd4d38d8b7f31d8a35a177e59ac40d7d6cf8a
     </div>
   );
 }

@@ -30,11 +30,16 @@ export default function DietAdviceCard({ advice, onRecordMeal }) {
   return (
     <Card className="p-4 sm:p-5">
       {/* 标题 */}
+<<<<<<< HEAD
       <div className="mb-4 flex items-start justify-between gap-3">
+=======
+      <div className="flex justify-between items-start mb-4">
+>>>>>>> 356bd4d38d8b7f31d8a35a177e59ac40d7d6cf8a
         <div>
           <h3 className="text-lg font-semibold text-gray-800">🍽️ 今日饮食建议</h3>
           <p className="text-sm text-gray-500">孕{pregnancyWeek}周</p>
         </div>
+<<<<<<< HEAD
         <div className="flex flex-col items-end gap-2">
           <button
             onClick={() => onRecordMeal()}
@@ -49,6 +54,14 @@ export default function DietAdviceCard({ advice, onRecordMeal }) {
             {showDetails ? "收起" : "查看详情"}
           </button>
         </div>
+=======
+        <button
+          onClick={() => setShowDetails(!showDetails)}
+          className="text-sm text-blue-600 hover:text-blue-700"
+        >
+          {showDetails ? "收起" : "查看详情"}
+        </button>
+>>>>>>> 356bd4d38d8b7f31d8a35a177e59ac40d7d6cf8a
       </div>
 
       {/* 营养目标进度 */}
@@ -116,11 +129,16 @@ export default function DietAdviceCard({ advice, onRecordMeal }) {
 
       {/* 小贴士 */}
       {!showDetails && tips && tips.length > 0 && (
+<<<<<<< HEAD
         <div className="rounded-lg bg-amber-50 p-3">
+=======
+        <div className="p-3 bg-amber-50 rounded-lg">
+>>>>>>> 356bd4d38d8b7f31d8a35a177e59ac40d7d6cf8a
           <div className="text-sm font-medium text-amber-800 mb-1">💡 今日提示</div>
           <div className="text-sm text-amber-700">{tips[0]}</div>
         </div>
       )}
+<<<<<<< HEAD
 
       {!showDetails && (
         <button
@@ -131,6 +149,8 @@ export default function DietAdviceCard({ advice, onRecordMeal }) {
           直接拍照记录这一餐
         </button>
       )}
+=======
+>>>>>>> 356bd4d38d8b7f31d8a35a177e59ac40d7d6cf8a
     </Card>
   );
 }

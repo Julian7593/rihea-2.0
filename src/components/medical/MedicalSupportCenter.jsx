@@ -5,7 +5,10 @@ import KnowledgeLibrary from "./KnowledgeLibrary";
 import RiskAssessment from "./RiskAssessment";
 import ExpertConsultation from "./ExpertConsultation";
 import CbtProgramCenter from "../cbt/CbtProgramCenter";
+<<<<<<< HEAD
 import { fetchCbtOverview } from "../../api/cbt";
+=======
+>>>>>>> 356bd4d38d8b7f31d8a35a177e59ac40d7d6cf8a
 import { assessEmotionalRisk } from "../../utils/riskAssessment";
 import { readCheckIns } from "../../utils/checkin";
 import { txt } from "../../utils/txt";
@@ -24,6 +27,7 @@ export default function MedicalSupportCenter({
 }) {
   const [activeTab, setActiveTab] = useState("knowledge");
   const [riskAssessment, setRiskAssessment] = useState(null);
+<<<<<<< HEAD
   const [cbtAssessment, setCbtAssessment] = useState(null);
 
   useEffect(() => {
@@ -59,6 +63,15 @@ export default function MedicalSupportCenter({
     const assessment = assessEmotionalRisk({ checkIns: source, cbtAssessment, lang });
     setRiskAssessment(assessment);
   }, [cbtAssessment, checkIns, lang]);
+=======
+
+  // Calculate risk assessment on mount
+  useEffect(() => {
+    const source = Array.isArray(checkIns) && checkIns.length > 0 ? checkIns : readCheckIns();
+    const assessment = assessEmotionalRisk({ checkIns: source, lang });
+    setRiskAssessment(assessment);
+  }, [checkIns, lang]);
+>>>>>>> 356bd4d38d8b7f31d8a35a177e59ac40d7d6cf8a
 
   const tabs = [
     {
@@ -91,6 +104,7 @@ export default function MedicalSupportCenter({
     setActiveTab(tabId);
   };
 
+<<<<<<< HEAD
   const handleNavigateToSupport = (target) => {
     if (target === "cbt") {
       setActiveTab("cbt");
@@ -101,6 +115,8 @@ export default function MedicalSupportCenter({
     }
   };
 
+=======
+>>>>>>> 356bd4d38d8b7f31d8a35a177e59ac40d7d6cf8a
   useEffect(() => {
     if (!pageRequest?.pageId) return;
     if (pageRequest.pageId === "cbt") {
@@ -190,7 +206,10 @@ export default function MedicalSupportCenter({
             style={style}
             pregnancyWeek={pregnancyWeek}
             riskLevel={riskAssessment?.level}
+<<<<<<< HEAD
             alert={riskAssessment?.alert}
+=======
+>>>>>>> 356bd4d38d8b7f31d8a35a177e59ac40d7d6cf8a
           />
         )}
 
@@ -198,10 +217,13 @@ export default function MedicalSupportCenter({
           <RiskAssessment
             lang={lang}
             style={style}
+<<<<<<< HEAD
             checkIns={Array.isArray(checkIns) ? checkIns : []}
             cbtAssessment={cbtAssessment}
             riskAssessment={riskAssessment}
             onNavigateToSupport={handleNavigateToSupport}
+=======
+>>>>>>> 356bd4d38d8b7f31d8a35a177e59ac40d7d6cf8a
           />
         )}
 
@@ -224,7 +246,10 @@ export default function MedicalSupportCenter({
             lang={lang}
             style={style}
             pregnancyWeek={pregnancyWeek}
+<<<<<<< HEAD
             riskAssessment={riskAssessment}
+=======
+>>>>>>> 356bd4d38d8b7f31d8a35a177e59ac40d7d6cf8a
           />
         )}
       </div>

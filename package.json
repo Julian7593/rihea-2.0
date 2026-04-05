@@ -5,12 +5,17 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+<<<<<<< HEAD
     "server": "node --env-file=.env server/index.js",
     "server:dev": "node --env-file=.env --watch server/index.js",
     "check:feishu-kb": "node --env-file=.env server/scripts/checkFeishuAccess.js",
     "check:web-search": "node --env-file=.env server/scripts/checkWebSearch.js",
     "sync:feishu": "node --env-file=.env server/scripts/syncFeishuKnowledge.js",
     "sync:feishu-kb": "node --env-file=.env server/scripts/syncFeishuKnowledge.js",
+=======
+    "server": "node server/index.js",
+    "server:dev": "node --watch server/index.js",
+>>>>>>> 356bd4d38d8b7f31d8a35a177e59ac40d7d6cf8a
     "build": "vite build",
     "preview": "vite preview",
     "test": "vitest",

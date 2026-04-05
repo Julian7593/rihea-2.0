@@ -2,7 +2,10 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import {
   ArrowLeft,
   Bell,
+<<<<<<< HEAD
   BookOpen,
+=======
+>>>>>>> 356bd4d38d8b7f31d8a35a177e59ac40d7d6cf8a
   CalendarDays,
   ChevronRight,
   CircleHelp,
@@ -15,7 +18,10 @@ import {
   Phone,
   ShieldCheck,
   Siren,
+<<<<<<< HEAD
   Sparkles,
+=======
+>>>>>>> 356bd4d38d8b7f31d8a35a177e59ac40d7d6cf8a
   Stethoscope,
   UserRound,
   Volume2,
@@ -24,8 +30,11 @@ import Card from "../ui/Card";
 import ToggleRow from "../ui/ToggleRow";
 import PartnerCbtSummaryCard from "../cbt/PartnerCbtSummaryCard";
 import PartnerSyncCenter from "../partner/PartnerSyncCenter";
+<<<<<<< HEAD
 import { appReleaseNotes, appVersionInfo } from "../../data/appMeta";
 import { appGuideContent } from "../../data/appGuideContent";
+=======
+>>>>>>> 356bd4d38d8b7f31d8a35a177e59ac40d7d6cf8a
 import { txt } from "../../utils/txt";
 import { calcCheckInStreak } from "../../utils/checkin";
 import { useToast } from "../../contexts/ToastContext";
@@ -94,6 +103,7 @@ const EMERGENCY_TITLE_ZH = {
   "Hospital hotline": "医院热线",
 };
 
+<<<<<<< HEAD
 const RELEASE_SECTION_META = {
   added: {
     label: { zh: "新增", en: "Added" },
@@ -115,6 +125,8 @@ const RELEASE_SECTION_META = {
   },
 };
 
+=======
+>>>>>>> 356bd4d38d8b7f31d8a35a177e59ac40d7d6cf8a
 const escapeRegExp = (value = "") => value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 
 const localizeCounselingSlotLabel = (label, lang) => {
@@ -614,11 +626,14 @@ export default function ProfileTab({
     );
   }, [handleCreatePartnerInvite, lang, partnerOverview, runPartnerMutation]);
 
+<<<<<<< HEAD
   const openStandaloneGuide = useCallback(() => {
     if (typeof window === "undefined") return;
     window.location.href = "/docs";
   }, []);
 
+=======
+>>>>>>> 356bd4d38d8b7f31d8a35a177e59ac40d7d6cf8a
   const profileRows = useMemo(
     () => [
       {
@@ -658,6 +673,7 @@ export default function ProfileTab({
         Icon: Stethoscope,
       },
       {
+<<<<<<< HEAD
         key: "docs",
         label: txt(lang, "App guide", "使用文档"),
         desc: txt(lang, "See how each area of the app is designed to be used", "查看应用结构、使用路径与功能说明"),
@@ -670,6 +686,8 @@ export default function ProfileTab({
         Icon: Sparkles,
       },
       {
+=======
+>>>>>>> 356bd4d38d8b7f31d8a35a177e59ac40d7d6cf8a
         key: "help",
         label: txt(lang, "Help center and feedback", "帮助中心与反馈"),
         desc: txt(lang, "FAQ, report issue and feature request", "常见问题、问题反馈与功能建议"),
@@ -704,7 +722,10 @@ export default function ProfileTab({
     getPartnerSharingOptions(lang).find((item) => item.value === partnerOverview?.sharingLevel)?.label ||
     txt(lang, "Off", "不共享");
   const partnerMainTask = partnerOverview?.preview?.mainTask || null;
+<<<<<<< HEAD
   const releaseSectionOrder = useMemo(() => ["added", "improved", "fixed"], []);
+=======
+>>>>>>> 356bd4d38d8b7f31d8a35a177e59ac40d7d6cf8a
 
   useEffect(() => {
     if (!pageRequest?.pageId) return;
@@ -909,6 +930,7 @@ export default function ProfileTab({
           </Card>
         )}
 
+<<<<<<< HEAD
         {activePage === "docs" && (
           <div className="space-y-4">
             <Card style={style}>
@@ -1161,6 +1183,8 @@ export default function ProfileTab({
           </div>
         )}
 
+=======
+>>>>>>> 356bd4d38d8b7f31d8a35a177e59ac40d7d6cf8a
         {activePage === "help" && (
           <Card style={style}>
             <SectionTitle
@@ -1184,6 +1208,7 @@ export default function ProfileTab({
                 </p>
               )}
             </div>
+<<<<<<< HEAD
             <div className="mt-4 grid gap-2 sm:grid-cols-2">
               <button
                 type="button"
@@ -1200,6 +1225,8 @@ export default function ProfileTab({
                 {txt(lang, "Open version notes", "打开版本说明")}
               </button>
             </div>
+=======
+>>>>>>> 356bd4d38d8b7f31d8a35a177e59ac40d7d6cf8a
             <p className="mt-3 text-xs text-clay/65">Rihea {helpCenter.version || "v1.0.0"}</p>
           </Card>
         )}

@@ -2,14 +2,20 @@
 
 import {
   MEDICAL_CATEGORIES,
+<<<<<<< HEAD
   MEDICAL_ARTICLES_ZH,
+=======
+>>>>>>> 356bd4d38d8b7f31d8a35a177e59ac40d7d6cf8a
   getArticlesByCategory,
   getArticlesByWeek,
   searchArticles,
   getCategories as getMedicalCategories,
 } from "../data/medicalContent";
 import {
+<<<<<<< HEAD
   MEDICAL_ARTICLES_EN,
+=======
+>>>>>>> 356bd4d38d8b7f31d8a35a177e59ac40d7d6cf8a
   getArticlesByCategory as getArticlesByCategoryEn,
   getArticlesByWeek as getArticlesByWeekEn,
   searchArticles as searchArticlesEn,
@@ -167,12 +173,19 @@ export function getArticleTypeLabel(type, lang = "zh") {
  */
 export function getRiskRecommendedArticles(riskLevel, pregnancyWeek, lang = "zh") {
   const allArticles = lang === "en" ? MEDICAL_ARTICLES_EN : MEDICAL_ARTICLES_ZH;
+<<<<<<< HEAD
   const normalizedWeek = Number.parseInt(String(pregnancyWeek ?? ""), 10);
   const safeWeek = Number.isFinite(normalizedWeek) ? Math.max(0, Math.min(42, normalizedWeek)) : 24;
 
   // Filter by pregnancy week
   const weekArticles = allArticles.filter(article =>
     safeWeek >= article.weekRange[0] && safeWeek <= article.weekRange[1]
+=======
+
+  // Filter by pregnancy week
+  const weekArticles = allArticles.filter(article =>
+    pregnancyWeek >= article.weekRange[0] && pregnancyWeek <= article.weekRange[1]
+>>>>>>> 356bd4d38d8b7f31d8a35a177e59ac40d7d6cf8a
   );
 
   // Recommendations based on risk level

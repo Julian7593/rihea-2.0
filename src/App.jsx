@@ -8,13 +8,20 @@ import LaunchWelcome from "./components/onboarding/LaunchWelcome";
 import NavButton from "./components/ui/NavButton";
 import ToggleRow from "./components/ui/ToggleRow";
 import { ToastProvider } from "./contexts/ToastContext";
+<<<<<<< HEAD
+=======
+import { LoadingProvider } from "./contexts/LoadingContext";
+>>>>>>> 356bd4d38d8b7f31d8a35a177e59ac40d7d6cf8a
 import { ToastContainer } from "./components/ui/Toast";
 import { presets } from "./theme/presets";
 import { readCheckIns, saveCheckIns } from "./utils/checkin";
 import { calcPregnancyWeekByDueDate, resolvePregnancyProfile } from "./utils/pregnancy";
 import { txt } from "./utils/txt";
 import { patchProfileBasic } from "./api/profile";
+<<<<<<< HEAD
 import { useCareWellness } from "./hooks/useCareWellness";
+=======
+>>>>>>> 356bd4d38d8b7f31d8a35a177e59ac40d7d6cf8a
 import { useLocalStorage } from "./hooks/useLocalStorage";
 
 const PROFILE_STORAGE_KEY = "rihea_profile_v2";
@@ -44,12 +51,15 @@ const TEXT_SIZE_CONFIG = {
 const SLEEP_MODE_START_HOUR = 20;
 const SLEEP_MODE_END_HOUR = 6;
 
+<<<<<<< HEAD
 const toUserIdSuffix = (value) => {
   const raw = String(value || "").trim();
   if (!raw) return "";
   return encodeURIComponent(raw).slice(0, 96);
 };
 
+=======
+>>>>>>> 356bd4d38d8b7f31d8a35a177e59ac40d7d6cf8a
 const isSleepModeHour = (date = new Date()) => {
   const hour = date.getHours();
   return hour >= SLEEP_MODE_START_HOUR || hour < SLEEP_MODE_END_HOUR;
@@ -378,9 +388,15 @@ export default function App() {
   );
   const [tab, setTab] = useState("home");
   const [homeFocusRequest, setHomeFocusRequest] = useState(null);
+<<<<<<< HEAD
   const [careFocusRequest, setCareFocusRequest] = useState(null);
   const [profilePageRequest, setProfilePageRequest] = useState(null);
   const [medicalPageRequest, setMedicalPageRequest] = useState(null);
+=======
+  const [profilePageRequest, setProfilePageRequest] = useState(null);
+  const [medicalPageRequest, setMedicalPageRequest] = useState(null);
+  const [careCategory, setCareCategory] = useState("soothe");
+>>>>>>> 356bd4d38d8b7f31d8a35a177e59ac40d7d6cf8a
   const [chatPrefill, setChatPrefill] = useState("");
   const [chatMessages, setChatMessages] = useState([]);
   const [demoAiState, setDemoAiState] = useState("idle");
@@ -389,7 +405,10 @@ export default function App() {
   const [auth, setAuth] = useLocalStorage(AUTH_STORAGE_KEY, getStoredAuth, AUTH_STORAGE_OPTIONS);
   const [checkIns, setCheckIns] = useState(() => readCheckIns());
   const [cbtRefreshToken, setCbtRefreshToken] = useState(0);
+<<<<<<< HEAD
   const careWellness = useCareWellness({ lang, profile, checkIns, cbtRefreshToken });
+=======
+>>>>>>> 356bd4d38d8b7f31d8a35a177e59ac40d7d6cf8a
   const lastEnabledSleepModeRef = useRef("auto");
 
   const chatInputRef = useRef(null);
@@ -439,6 +458,7 @@ export default function App() {
     if (accountName) return accountName;
     return txt(lang, "Mama", "准妈妈");
   }, [auth?.account, lang, profile?.name]);
+<<<<<<< HEAD
   const chatUserId = useMemo(() => {
     const account = auth?.account?.trim();
     if (account) return `acct_${toUserIdSuffix(account)}`;
@@ -446,6 +466,8 @@ export default function App() {
     if (profileName) return `profile_${toUserIdSuffix(profileName)}`;
     return "guest_local";
   }, [auth?.account, profile?.name]);
+=======
+>>>>>>> 356bd4d38d8b7f31d8a35a177e59ac40d7d6cf8a
   const navItems = useMemo(
     () => [
       { id: "home", label: txt(lang, "Home", "首页"), Icon: Leaf },
@@ -621,6 +643,7 @@ export default function App() {
     setProfilePageRequest({ pageId, token: Date.now() });
   }, []);
 
+<<<<<<< HEAD
   const openCareSection = useCallback((targetId) => {
     setShowSettings(false);
     setShowChat(false);
@@ -628,6 +651,8 @@ export default function App() {
     setCareFocusRequest({ targetId, token: Date.now() });
   }, []);
 
+=======
+>>>>>>> 356bd4d38d8b7f31d8a35a177e59ac40d7d6cf8a
   const openMedicalPage = useCallback((pageId) => {
     setShowSettings(false);
     setShowChat(false);
@@ -686,11 +711,21 @@ export default function App() {
       return;
     }
     if (category === "pro") {
+<<<<<<< HEAD
       openMedicalPage("cbt");
       return;
     }
     focusHomeSection("rihea-checkin-entry");
   }, [focusHomeSection, lang, openChatWithDraft, openMedicalPage]);
+=======
+      setShowSettings(false);
+      setShowChat(false);
+      setTab("me");
+      return;
+    }
+    focusHomeSection("rihea-checkin-entry");
+  }, [focusHomeSection, lang, openChatWithDraft]);
+>>>>>>> 356bd4d38d8b7f31d8a35a177e59ac40d7d6cf8a
 
   const handleLearnAction = useCallback(({ category }) => {
     if (category === "habit") {
@@ -931,8 +966,11 @@ export default function App() {
                       onFocusConsumed={() => setHomeFocusRequest(null)}
                       onOpenPartnerCenter={() => openProfilePage("partner")}
                       onOpenCbtCenter={() => openMedicalPage("cbt")}
+<<<<<<< HEAD
                       onOpenCareSection={openCareSection}
                       careWellness={careWellness}
+=======
+>>>>>>> 356bd4d38d8b7f31d8a35a177e59ac40d7d6cf8a
                       cbtRefreshToken={cbtRefreshToken}
                     />
                   )}
@@ -940,6 +978,11 @@ export default function App() {
                     <CareTab
                       lang={lang}
                       style={style}
+<<<<<<< HEAD
+=======
+                      category={careCategory}
+                      setCategory={setCareCategory}
+>>>>>>> 356bd4d38d8b7f31d8a35a177e59ac40d7d6cf8a
                       onMainAction={handleCareAction}
                       onBackupAction={handleCareAction}
                       profile={profile}
@@ -947,9 +990,12 @@ export default function App() {
                       cbtRefreshToken={cbtRefreshToken}
                       onCbtUpdated={notifyCbtUpdated}
                       onOpenCbtCenter={() => openMedicalPage("cbt")}
+<<<<<<< HEAD
                       focusRequest={careFocusRequest}
                       onFocusConsumed={() => setCareFocusRequest(null)}
                       careWellness={careWellness}
+=======
+>>>>>>> 356bd4d38d8b7f31d8a35a177e59ac40d7d6cf8a
                     />
                   )}
                   {tab === "medical" && (
@@ -1060,10 +1106,14 @@ export default function App() {
             <ChatPanel
               lang={lang}
               style={style}
+<<<<<<< HEAD
               userId={chatUserId}
               userName={chatUserName}
               profile={profile}
               checkIns={checkIns}
+=======
+              userName={chatUserName}
+>>>>>>> 356bd4d38d8b7f31d8a35a177e59ac40d7d6cf8a
               initialDraft={chatPrefill}
               messages={chatMessages}
               setMessages={setChatMessages}

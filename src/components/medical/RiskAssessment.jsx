@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Shield, TrendingUp, TrendingDown, Activity, Moon, ChevronRight, AlertTriangle } from "lucide-react";
 import Card from "../ui/Card";
+<<<<<<< HEAD
 import { ALERT_LEVELS, assessEmotionalRisk, getRiskLevelConfig } from "../../utils/riskAssessment";
 import { readCheckIns } from "../../utils/checkin";
 import { txt } from "../../utils/txt";
@@ -13,10 +14,18 @@ export default function RiskAssessment({
   riskAssessment: riskAssessmentProp = null,
   onNavigateToSupport,
 }) {
+=======
+import { assessEmotionalRisk, shouldTriggerEmergencyAlert, getRiskLevelConfig } from "../../utils/riskAssessment";
+import { readCheckIns } from "../../utils/checkin";
+import { txt } from "../../utils/txt";
+
+export default function RiskAssessment({ lang, style }) {
+>>>>>>> 356bd4d38d8b7f31d8a35a177e59ac40d7d6cf8a
   const [riskAssessment, setRiskAssessment] = useState(null);
   const [showDetails, setShowDetails] = useState(false);
 
   useEffect(() => {
+<<<<<<< HEAD
     if (riskAssessmentProp) {
       setRiskAssessment(riskAssessmentProp);
       return;
@@ -25,6 +34,12 @@ export default function RiskAssessment({
     const assessment = assessEmotionalRisk({ checkIns: source, cbtAssessment, lang });
     setRiskAssessment(assessment);
   }, [cbtAssessment, checkIns, lang, riskAssessmentProp]);
+=======
+    const checkIns = readCheckIns();
+    const assessment = assessEmotionalRisk({ checkIns, lang });
+    setRiskAssessment(assessment);
+  }, [lang]);
+>>>>>>> 356bd4d38d8b7f31d8a35a177e59ac40d7d6cf8a
 
   if (!riskAssessment) {
     return (
@@ -40,9 +55,13 @@ export default function RiskAssessment({
   }
 
   const riskConfig = getRiskLevelConfig(riskAssessment.level, lang);
+<<<<<<< HEAD
   const shouldAlert = riskAssessment?.alert?.triggered === true;
   const helpTarget =
     cbtAssessment?.selfHarmRisk || riskAssessment?.alert?.level === ALERT_LEVELS.URGENT ? "cbt" : "experts";
+=======
+  const shouldAlert = shouldTriggerEmergencyAlert({ checkIns: readCheckIns() });
+>>>>>>> 356bd4d38d8b7f31d8a35a177e59ac40d7d6cf8a
 
   return (
     <div className="space-y-4">
@@ -64,7 +83,10 @@ export default function RiskAssessment({
               </p>
               <button
                 type="button"
+<<<<<<< HEAD
                 onClick={() => onNavigateToSupport?.(helpTarget)}
+=======
+>>>>>>> 356bd4d38d8b7f31d8a35a177e59ac40d7d6cf8a
                 className="mt-3 inline-flex items-center gap-1.5 rounded-full bg-red-500 px-4 py-2 text-sm font-semibold text-white hover:bg-red-600 transition-colors"
               >
                 {txt(lang, "Get Help Now", "立即寻求帮助")}
@@ -93,6 +115,7 @@ export default function RiskAssessment({
             <p className="mt-1 text-sm text-clay/75">
               {riskAssessment.recommendation}
             </p>
+<<<<<<< HEAD
             {riskAssessment.provisional && (
               <p className="mt-2 text-xs font-semibold text-clay/62">
                 {txt(
@@ -102,6 +125,8 @@ export default function RiskAssessment({
                 )}
               </p>
             )}
+=======
+>>>>>>> 356bd4d38d8b7f31d8a35a177e59ac40d7d6cf8a
           </div>
         </div>
 
@@ -120,7 +145,11 @@ export default function RiskAssessment({
               className="h-full rounded-full transition-all duration-500 ease-out"
               style={{
                 width: `${riskAssessment.score}%`,
+<<<<<<< HEAD
                 backgroundColor: riskConfig.accent,
+=======
+                backgroundColor: riskConfig.color.replace("bg-", ""),
+>>>>>>> 356bd4d38d8b7f31d8a35a177e59ac40d7d6cf8a
               }}
             />
           </div>
@@ -153,6 +182,7 @@ export default function RiskAssessment({
         </Card>
       )}
 
+<<<<<<< HEAD
       {riskAssessment.hasData && riskAssessment.provisional && (
         <Card style={style} className="bg-cream/40">
           <div className="flex items-start gap-3">
@@ -173,6 +203,8 @@ export default function RiskAssessment({
         </Card>
       )}
 
+=======
+>>>>>>> 356bd4d38d8b7f31d8a35a177e59ac40d7d6cf8a
       {/* Risk Factors Details */}
       {riskAssessment.hasData && (
         <Card style={style}>
@@ -215,12 +247,15 @@ export default function RiskAssessment({
                         {factor.type === "poor_sleep" && (
                           <Moon className="mt-0.5 h-4 w-4 shrink-0 text-purple-500" />
                         )}
+<<<<<<< HEAD
                         {factor.type === "sleep_duration_out_of_range" && (
                           <Moon className="mt-0.5 h-4 w-4 shrink-0 text-purple-500" />
                         )}
                         {factor.type === "sleep_variability" && (
                           <Moon className="mt-0.5 h-4 w-4 shrink-0 text-indigo-500" />
                         )}
+=======
+>>>>>>> 356bd4d38d8b7f31d8a35a177e59ac40d7d6cf8a
                         {factor.type === "mood_extremes" && (
                           <TrendingUp className="mt-0.5 h-4 w-4 shrink-0 text-red-500" />
                         )}
@@ -304,7 +339,11 @@ export default function RiskAssessment({
                       {txt(lang, "Increase check-in frequency", "增加打卡频率")}
                     </p>
                     <p className="mt-0.5 text-xs text-clay/70">
+<<<<<<< HEAD
                       {txt(lang, "Track mood, triggers, and sleep more consistently.", "更持续地记录情绪、触发因素和睡眠。")}
+=======
+                      {txt(lang, "Track mood and triggers more consistently.", "更持续地记录情绪和触发因素。")}
+>>>>>>> 356bd4d38d8b7f31d8a35a177e59ac40d7d6cf8a
                     </p>
                   </div>
                 </div>
@@ -330,7 +369,11 @@ export default function RiskAssessment({
                       {txt(lang, "Consider professional consultation", "考虑咨询专业人士")}
                     </p>
                     <p className="mt-0.5 text-xs text-clay/70">
+<<<<<<< HEAD
                       {txt(lang, "Connect with a counselor, midwife, or CBT plan for guidance.", "联系咨询师、助产士或 CBT 计划获取指导。")}
+=======
+                      {txt(lang, "Connect with a counselor or midwife for guidance.", "联系咨询师或助产士获取指导。")}
+>>>>>>> 356bd4d38d8b7f31d8a35a177e59ac40d7d6cf8a
                     </p>
                   </div>
                 </div>
@@ -348,7 +391,11 @@ export default function RiskAssessment({
                       {txt(lang, "Seek professional help", "寻求专业帮助")}
                     </p>
                     <p className="mt-0.5 text-xs text-clay/70">
+<<<<<<< HEAD
                       {txt(lang, "Contact a psychologist, obstetrician, or your CBT referral path now.", "立即联系心理医生、产科医生，或立刻进入 CBT 转介流程。")}
+=======
+                      {txt(lang, "Contact a psychologist or obstetrician immediately.", "立即联系心理医生或产科医生。")}
+>>>>>>> 356bd4d38d8b7f31d8a35a177e59ac40d7d6cf8a
                     </p>
                   </div>
                 </div>

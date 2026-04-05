@@ -8,6 +8,7 @@ import {
   PREGNANCY_TRIMESTERS,
   BMI_CATEGORIES,
   NUTRITION_STANDARDS,
+<<<<<<< HEAD
 } from "../data/nutritionContent.js";
 import { calcPregnancyWeekByDueDate, normalizeWeekLabel } from "./pregnancy.js";
 
@@ -387,6 +388,11 @@ export function getFoodPhotoAnalysisDisclaimer() {
   return PHOTO_ANALYSIS_DISCLAIMER;
 }
 
+=======
+} from "../data/nutritionContent";
+import { calcPregnancyWeekByDueDate, normalizeWeekLabel } from "./pregnancy.js";
+
+>>>>>>> 356bd4d38d8b7f31d8a35a177e59ac40d7d6cf8a
 /**
  * 计算BMI
  */

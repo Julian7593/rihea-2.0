@@ -2,4 +2,7 @@ node_modules
 dist
 .env
 server/data/*.local.json
+<<<<<<< HEAD
 server/kb/*.local.json
+=======
+>>>>>>> 356bd4d38d8b7f31d8a35a177e59ac40d7d6cf8a

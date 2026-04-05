@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { motion } from "framer-motion";
+<<<<<<< HEAD
 import { Bot, Brain, MessageSquarePlus, Mic, Send, Sparkles, User, X } from "lucide-react";
 import { requestAgentChat, requestAgentPresets } from "../../api/agent";
 import { txt } from "../../utils/txt";
@@ -130,6 +131,16 @@ export default function ChatPanel({
   userName = "",
   profile = {},
   checkIns = [],
+=======
+import { Bot, Brain, Globe, MessageSquarePlus, Mic, Send, Sparkles, User, X } from "lucide-react";
+import { txt } from "../../utils/txt";
+import RiheaLogo from "../brand/RiheaLogo";
+
+export default function ChatPanel({
+  lang,
+  style,
+  userName = "",
+>>>>>>> 356bd4d38d8b7f31d8a35a177e59ac40d7d6cf8a
   initialDraft = "",
   messages = [],
   setMessages = () => {},
@@ -137,25 +148,36 @@ export default function ChatPanel({
   inputRef,
 }) {
   const [draft, setDraft] = useState(initialDraft);
+<<<<<<< HEAD
   const [presetCards, setPresetCards] = useState([]);
   const [selectedModelKey, setSelectedModelKey] = useState("deepseek_reasoner");
+=======
+  const [toolMode, setToolMode] = useState("deep");
+>>>>>>> 356bd4d38d8b7f31d8a35a177e59ac40d7d6cf8a
   const [logoState, setLogoState] = useState("idle");
   const [isVoicePressing, setIsVoicePressing] = useState(false);
   const [isVoiceActive, setIsVoiceActive] = useState(false);
   const [voiceStatus, setVoiceStatus] = useState("idle");
   const [voiceElapsedMs, setVoiceElapsedMs] = useState(0);
+<<<<<<< HEAD
   const [isSending, setIsSending] = useState(false);
+=======
+>>>>>>> 356bd4d38d8b7f31d8a35a177e59ac40d7d6cf8a
   const recognitionRef = useRef(null);
   const holdTimerRef = useRef(null);
   const shouldKeepListeningRef = useRef(false);
   const isVoicePressingRef = useRef(false);
+<<<<<<< HEAD
   const messageScrollRef = useRef(null);
   const bottomAnchorRef = useRef(null);
   const shouldAutoScrollRef = useRef(true);
+=======
+>>>>>>> 356bd4d38d8b7f31d8a35a177e59ac40d7d6cf8a
   const baseDraftRef = useRef("");
   const finalTranscriptRef = useRef("");
   const voiceStartedAtRef = useRef(0);
   const voiceElapsedTimerRef = useRef(null);
+<<<<<<< HEAD
   const sessionIdRef = useRef(createSessionId());
   const displayName = userName || txt(lang, "Mama", "准妈妈");
   const hiLabel = lang === "zh" ? `你好，${displayName}` : `Hi, ${displayName}`;
@@ -227,6 +249,25 @@ export default function ChatPanel({
   );
   const featuredPresetCards = (presetCards.length ? presetCards : fallbackPresetCards).filter((item) => item.category !== "library").slice(0, 3);
   const libraryPresetCards = (presetCards.length ? presetCards : fallbackPresetCards).filter((item) => item.category === "library").slice(0, 3);
+=======
+  const displayName = userName || txt(lang, "Mama", "准妈妈");
+  const hiLabel = lang === "zh" ? `你好，${displayName}` : `Hi, ${displayName}`;
+
+  const todayItems = useMemo(
+    () =>
+      lang === "zh"
+        ? ["孕晚期心态稳定方法", "孕期夜间焦虑怎么缓解", "如何和伴侣沟通支持需求"]
+        : ["Late-pregnancy emotional stability", "How to ease night anxiety", "How to ask partner support clearly"],
+    [lang]
+  );
+  const monthlyItems = useMemo(
+    () =>
+      lang === "zh"
+        ? ["正念练习多久有效", "睡眠与压力关系图解", "何时寻求专业帮助"]
+        : ["How fast mindfulness helps", "Sleep-stress relation guide", "When to seek professional help"],
+    [lang]
+  );
+>>>>>>> 356bd4d38d8b7f31d8a35a177e59ac40d7d6cf8a
 
   const clearVoiceElapsedTicker = () => {
     if (voiceElapsedTimerRef.current) {
@@ -261,6 +302,7 @@ export default function ChatPanel({
   }, [initialDraft]);
 
   useEffect(() => {
+<<<<<<< HEAD
     let cancelled = false;
 
     requestAgentPresets({ lang })
@@ -280,6 +322,8 @@ export default function ChatPanel({
   }, [lang]);
 
   useEffect(() => {
+=======
+>>>>>>> 356bd4d38d8b7f31d8a35a177e59ac40d7d6cf8a
     const recognition = recognitionRef.current;
     if (recognition) {
       recognition.lang = lang === "zh" ? "zh-CN" : "en-US";
@@ -303,6 +347,7 @@ export default function ChatPanel({
   }, [draft, messages]);
 
   useEffect(() => {
+<<<<<<< HEAD
     if (!messages.length) {
       shouldAutoScrollRef.current = true;
       return;
@@ -317,6 +362,8 @@ export default function ChatPanel({
   }, [messages]);
 
   useEffect(() => {
+=======
+>>>>>>> 356bd4d38d8b7f31d8a35a177e59ac40d7d6cf8a
     return () => {
       if (holdTimerRef.current) {
         window.clearTimeout(holdTimerRef.current);
@@ -534,6 +581,7 @@ export default function ChatPanel({
             ? txt(lang, "Voice input interrupted, long press to retry", "语音输入中断，请长按重试")
             : txt(lang, "Long press the mic for hands-free input", "长按麦克风可免打字输入");
 
+<<<<<<< HEAD
   const updateAutoScrollState = () => {
     const container = messageScrollRef.current;
     if (!container) return;
@@ -565,10 +613,16 @@ export default function ChatPanel({
       text: visibleText,
     };
 
+=======
+  const handleSend = () => {
+    const question = draft.trim();
+    if (!question) return;
+>>>>>>> 356bd4d38d8b7f31d8a35a177e59ac40d7d6cf8a
     if (isVoicePressingRef.current || shouldKeepListeningRef.current || isVoiceActive) {
       stopVoiceRecognition();
     }
     setLogoState("speaking");
+<<<<<<< HEAD
     setDraft("");
     setIsSending(true);
     setMessages((prev) => [...prev, userMessage, pendingMessage]);
@@ -637,6 +691,21 @@ export default function ChatPanel({
     const question = draft.trim();
     if (!question || isSending) return;
     await sendQuestion({ question });
+=======
+    setMessages((prev) => [
+      ...prev,
+      { role: "user", text: question },
+      {
+        role: "assistant",
+        text: txt(
+          lang,
+          "Model API will be connected here soon. Your question has been saved.",
+          "大模型接口即将接入，已记录你的问题。"
+        ),
+      },
+    ]);
+    setDraft("");
+>>>>>>> 356bd4d38d8b7f31d8a35a177e59ac40d7d6cf8a
   };
 
   const handleNewChat = () => {
@@ -644,7 +713,10 @@ export default function ChatPanel({
       stopVoiceRecognition();
     }
     setLogoState("idle");
+<<<<<<< HEAD
     sessionIdRef.current = createSessionId();
+=======
+>>>>>>> 356bd4d38d8b7f31d8a35a177e59ac40d7d6cf8a
     setMessages([]);
     setDraft("");
   };
@@ -694,6 +766,7 @@ export default function ChatPanel({
               <section>
                 <p className="mb-2 text-xs font-semibold text-clay/55">{txt(lang, "Today", "今天")}</p>
                 <div className="space-y-1.5">
+<<<<<<< HEAD
                   {featuredPresetCards.map((item) => (
                     <button
                       key={item.id}
@@ -702,6 +775,15 @@ export default function ChatPanel({
                       className="w-full rounded-xl px-2 py-2 text-left text-sm text-clay/90 transition hover:bg-white"
                     >
                       {item.title}
+=======
+                  {todayItems.map((item) => (
+                    <button
+                      key={item}
+                      type="button"
+                      className="w-full rounded-xl px-2 py-2 text-left text-sm text-clay/90 transition hover:bg-white"
+                    >
+                      {item}
+>>>>>>> 356bd4d38d8b7f31d8a35a177e59ac40d7d6cf8a
                     </button>
                   ))}
                 </div>
@@ -709,6 +791,7 @@ export default function ChatPanel({
               <section>
                 <p className="mb-2 text-xs font-semibold text-clay/55">{txt(lang, "Within 30 days", "30天内")}</p>
                 <div className="space-y-1.5">
+<<<<<<< HEAD
                   {libraryPresetCards.map((item) => (
                     <button
                       key={item.id}
@@ -717,6 +800,15 @@ export default function ChatPanel({
                       className="w-full rounded-xl px-2 py-2 text-left text-sm text-clay/88 transition hover:bg-white"
                     >
                       {item.title}
+=======
+                  {monthlyItems.map((item) => (
+                    <button
+                      key={item}
+                      type="button"
+                      className="w-full rounded-xl px-2 py-2 text-left text-sm text-clay/88 transition hover:bg-white"
+                    >
+                      {item}
+>>>>>>> 356bd4d38d8b7f31d8a35a177e59ac40d7d6cf8a
                     </button>
                   ))}
                 </div>
@@ -760,11 +852,15 @@ export default function ChatPanel({
               </div>
             </header>
 
+<<<<<<< HEAD
             <div
               ref={messageScrollRef}
               onScroll={updateAutoScrollState}
               className="min-h-0 flex-1 overflow-y-auto px-4 py-6 lg:px-10"
             >
+=======
+            <div className="min-h-0 flex-1 overflow-y-auto px-4 py-6 lg:px-10">
+>>>>>>> 356bd4d38d8b7f31d8a35a177e59ac40d7d6cf8a
               {messages.length === 0 ? (
                 <div className="flex h-full flex-col items-center justify-center text-center">
                   <RiheaLogo
@@ -790,6 +886,7 @@ export default function ChatPanel({
                   </p>
                 </div>
               ) : (
+<<<<<<< HEAD
                 <div className="chat-thread mx-auto max-w-3xl space-y-4 pb-3">
                   {messages.map((msg, idx) => (
                     <motion.div
@@ -991,6 +1088,28 @@ export default function ChatPanel({
                     </motion.div>
                   ))}
                   <div ref={bottomAnchorRef} aria-hidden="true" />
+=======
+                <div className="mx-auto max-w-3xl space-y-4">
+                  {messages.map((msg, idx) => (
+                    <div key={`${msg.role}-${idx}`} className={msg.role === "assistant" ? "" : "flex justify-end"}>
+                      <div
+                        className={`max-w-[92%] rounded-2xl px-4 py-3 text-sm leading-relaxed ${
+                          msg.role === "assistant"
+                            ? "bg-[#f2efe7] text-clay border border-sage/15"
+                            : "bg-[#ecd3de] text-[#5f4652] border border-[#e4bfd0]"
+                        }`}
+                      >
+                        {msg.role === "assistant" && (
+                          <span className="mb-1 inline-flex items-center gap-1 text-[10px] font-semibold uppercase tracking-wide text-clay/55">
+                            <Bot className="h-3 w-3" />
+                            RIHEA AI
+                          </span>
+                        )}
+                        <p>{msg.text}</p>
+                      </div>
+                    </div>
+                  ))}
+>>>>>>> 356bd4d38d8b7f31d8a35a177e59ac40d7d6cf8a
                 </div>
               )}
             </div>
@@ -1010,7 +1129,10 @@ export default function ChatPanel({
                   <textarea
                     ref={inputRef}
                     value={draft}
+<<<<<<< HEAD
                     disabled={isSending}
+=======
+>>>>>>> 356bd4d38d8b7f31d8a35a177e59ac40d7d6cf8a
                     rows={1}
                     onChange={(e) => setDraft(e.target.value)}
                     onKeyDown={(e) => {
@@ -1066,10 +1188,14 @@ export default function ChatPanel({
                     type="button"
                     onClick={handleSend}
                     aria-label={txt(lang, "Send message", "发送消息")}
+<<<<<<< HEAD
                     disabled={isSending}
                     className={`grid h-10 w-10 shrink-0 place-items-center rounded-full transition hover:brightness-95 ${
                       isSending ? "opacity-60" : ""
                     }`}
+=======
+                    className="grid h-10 w-10 shrink-0 place-items-center rounded-full transition hover:brightness-95"
+>>>>>>> 356bd4d38d8b7f31d8a35a177e59ac40d7d6cf8a
                     style={{ backgroundColor: style.primaryBg, color: style.primaryText }}
                   >
                     <Send className="h-4 w-4" />
@@ -1077,6 +1203,7 @@ export default function ChatPanel({
                 </div>
 
                 <div className="mt-3 flex flex-wrap items-center justify-between gap-3">
+<<<<<<< HEAD
                   <div className="flex min-w-[220px] flex-wrap items-center gap-2">
                     <label
                       htmlFor="chat-model-select"
@@ -1101,6 +1228,35 @@ export default function ChatPanel({
                     <span className="text-xs font-semibold text-clay/55">
                       {txt(lang, "Current", "当前")}: {selectedModelLabel}
                     </span>
+=======
+                  <div className="flex flex-wrap items-center gap-2">
+                    <button
+                      type="button"
+                      onClick={() => setToolMode("deep")}
+                      className="glass-control inline-flex items-center gap-1 rounded-full px-3 py-1.5 text-xs font-semibold transition"
+                      style={
+                        toolMode === "deep"
+                          ? { borderColor: style.primaryBg, backgroundColor: "#f7ecf2", color: "#5f4652" }
+                          : { borderColor: "rgba(156,176,163,.3)", backgroundColor: "#fff", color: "#6E7F75" }
+                      }
+                    >
+                      <Brain className="h-3.5 w-3.5" />
+                      {txt(lang, "Deep Thinking", "深度思考")}
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setToolMode("web")}
+                      className="glass-control inline-flex items-center gap-1 rounded-full px-3 py-1.5 text-xs font-semibold transition"
+                      style={
+                        toolMode === "web"
+                          ? { borderColor: style.primaryBg, backgroundColor: "#f7ecf2", color: "#5f4652" }
+                          : { borderColor: "rgba(156,176,163,.3)", backgroundColor: "#fff", color: "#6E7F75" }
+                      }
+                    >
+                      <Globe className="h-3.5 w-3.5" />
+                      {txt(lang, "Web Search", "联网搜索")}
+                    </button>
+>>>>>>> 356bd4d38d8b7f31d8a35a177e59ac40d7d6cf8a
                   </div>
 
                   {isVoiceActive ? (

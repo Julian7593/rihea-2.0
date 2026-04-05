@@ -1,4 +1,37 @@
+const guideSections = [
+  { id: "quick-start", title: "快速开始", shortTitle: "开始", desc: "第一次使用顺序" },
+  { id: "main-flow", title: "主流程", shortTitle: "主流程", desc: "完整使用链路" },
+  { id: "navigation", title: "导航协作", shortTitle: "导航", desc: "四大导航如何协作" },
+  { id: "modules", title: "核心模块", shortTitle: "模块", desc: "逐项功能说明" },
+  { id: "architecture", title: "技术架构", shortTitle: "架构", desc: "技术链路与分层治理" },
+  { id: "ai-mechanism", title: "AI 机制", shortTitle: "AI", desc: "为什么回答受控且可解释" },
+  { id: "phase-mapping", title: "阶段判断", shortTitle: "阶段", desc: "roadmap 落地映射" },
+  { id: "release-notes", title: "版本说明", shortTitle: "版本", desc: "最近版本变化" },
+  { id: "safety-boundary", title: "边界说明", shortTitle: "边界", desc: "数据、安全与协作边界" },
+  { id: "faq", title: "FAQ", shortTitle: "FAQ", desc: "高频外部问题" },
+  { id: "next-step", title: "下一步", shortTitle: "下一步", desc: "演示与推进建议" },
+];
+
 export const appGuideContent = {
+  sections: guideSections,
+  cover: {
+    eyebrow: "Official Product Guide",
+    title: "妊安 APP 当前系统使用说明",
+    subtitle:
+      "这不是一份只给用户看的功能列表，而是面向产品演示、交付讲解和研发协同的当前系统说明页。",
+    oneLiner: "围绕孕期稳态管理构建的受控知识增强型对话助手与陪伴式 APP。",
+    audience: ["产品演示", "对外交付", "研发协同", "运营讲解"],
+    readingTips: [
+      "如果你第一次了解产品，建议先看“主流程”和“四大导航如何协作”。",
+      "如果你需要解释 AI 为什么可信，直接看“技术架构”和“AI 机制”。",
+      "如果你要对外讲解当前版本边界，请配合“阶段判断”和“边界说明”一起使用。",
+    ],
+    quickLinks: [
+      { id: "main-flow", label: "主流程", hint: "先理解用户每天怎么用" },
+      { id: "architecture", label: "技术架构", hint: "看清底层分层和知识链路" },
+      { id: "faq", label: "FAQ", hint: "用于对外说明和演示答疑" },
+    ],
+  },
   hero: {
     badge: "System Guide",
     title: "妊安 APP 当前系统使用说明",
@@ -163,6 +196,8 @@ export const appGuideContent = {
     },
   ],
   architecture: {
+    summary:
+      "底层架构不是“模型直接回答”的单线条系统，而是由产品入口、路由编排、检索工具、知识索引和治理边界共同组成的受控链路。",
     frontendLayers: [
       "App 负责全局状态、底部导航、页面切换和主入口组织。",
       "Tab 层将能力拆成首页、关怀、医疗支持、我的四大主导航。",
@@ -192,12 +227,7 @@ export const appGuideContent = {
       "Response Composer",
       "Memory + Audit",
     ],
-    knowledgePriority: [
-      "本地产品知识",
-      "飞书同步知识",
-      "飞书实时补查",
-      "联网搜索",
-    ],
+    knowledgePriority: ["本地产品知识", "飞书同步知识", "飞书实时补查", "联网搜索"],
     safetyMechanisms: [
       "Safety Precheck 负责输入侧高风险拦截，避免明显越界问题继续进入普通回答链路。",
       "Safety Postcheck 负责输出侧越界审查、免责声明补充和必要降级。",
@@ -207,6 +237,81 @@ export const appGuideContent = {
       "模型主要负责基于证据生成回答，而不是自由决定知识来源。",
       "知识来源优先级、风险边界和工具调用由编排层、规则层和 Skill 层主控。",
       "当前系统允许多模型切换，但不把模型当作唯一真相来源。",
+    ],
+    layers: [
+      {
+        id: "entry",
+        level: "L4",
+        title: "交互与入口层",
+        tone: "graphite",
+        summary: "用户从首页、关怀、医疗支持、我的以及 ChatPanel 发起问题、动作和查看请求。",
+        nodes: ["App / Tab / Center / Page", "Card / Modal 行动单元", "ChatPanel / 帮助 / 使用文档"],
+      },
+      {
+        id: "routing",
+        level: "L3",
+        title: "路由与场景分发层",
+        tone: "plum",
+        summary: "系统先根据风险、场景和产品规则做意图分流，再决定走普通建议、专业支持还是高风险升级链路。",
+        nodes: ["`/v1/agent/chat`", "Agent Orchestrator", "Safety Precheck", "Main Router Agent / 场景路由"],
+      },
+      {
+        id: "retrieval",
+        level: "L2",
+        title: "检索与工具层",
+        tone: "lake",
+        summary: "在允许的上下文里调用知识检索、Skill、Support/Profile/Partner 接口和必要工具，不让模型自由决定全部动作。",
+        nodes: ["Grounded Retrieval", "Skills / Tools", "support / profile / partner 接口", "Response Composer"],
+      },
+      {
+        id: "knowledge",
+        level: "L1",
+        title: "知识与索引层",
+        tone: "olive",
+        summary: "知识来源遵循优先级，先用本地产品知识与飞书同步快照，必要时才做飞书实时补查和联网搜索。",
+        nodes: ["本地产品知识", "飞书同步知识", "飞书实时补查", "联网搜索（最后补充）"],
+      },
+      {
+        id: "governance",
+        level: "L0",
+        title: "治理与安全边界",
+        tone: "ember",
+        summary: "把高风险升级、输出审查、引用可解释性、Memory 与 Audit 放在底层治理边界里统一约束。",
+        nodes: ["Safety Postcheck", "Risk Escalation / 紧急承接", "Memory + Audit", "引用 / 回退 / 转人工"],
+      },
+    ],
+    edges: [
+      { from: "entry", to: "routing", label: "主入口主链路" },
+      { from: "routing", to: "retrieval", label: "路由后调用受控工具" },
+      { from: "retrieval", to: "knowledge", label: "按知识优先级取证据" },
+      { from: "knowledge", to: "governance", label: "带引用进入生成与审查" },
+    ],
+    callouts: [
+      {
+        title: "知识优先级",
+        desc: "知识源不是并列自由竞争，而是按稳定性和可控性排序。",
+        items: [
+          "1. 本地产品知识",
+          "2. 飞书同步知识",
+          "3. 飞书实时补查",
+          "4. 联网搜索",
+        ],
+      },
+      {
+        title: "高风险旁路",
+        desc: "一旦触发明显高风险，系统优先进入升级承接，而不是把风险和普通建议混写在同一条回复里。",
+        items: ["输入预检命中高风险", "升级到 RiskEscalationAgent", "输出紧急联系人 / 线下就医 / 转人工"],
+      },
+      {
+        title: "输出与回退路径",
+        desc: "当知识不足或上下文不完整时，系统允许追问、降级和转人工，而不是强行给结论。",
+        items: ["回答 + 引用", "置信度不足时追问", "无法确认时降级与人工承接"],
+      },
+    ],
+    principles: [
+      "模型的角色更接近“基于证据写答案的生成器”，而不是自由决定知识来源的总控智能体。",
+      "风险优先级高于完整回答；一旦存在明显高风险，优先触发升级与线下承接。",
+      "知识检索和工具调用由编排层、规则层与 Skill 层共同决定，保证回答可追溯、可解释。",
     ],
   },
   aiMechanism: {
@@ -239,6 +344,27 @@ export const appGuideContent = {
       "Phase 4：多步任务规划层、澄清状态机和工作流回放能力尚未形成。",
       "Phase 5：个性化策略引擎、评估看板、Prompt / Skill / 知识运营后台仍未完成。",
     ],
+  },
+  faq: [
+    {
+      question: "妊安当前最准确的产品定义是什么？",
+      answer:
+        "当前应表述为“围绕孕期稳态管理构建的受控知识增强型对话助手与陪伴式 APP”，而不是完全自主型多模态智能体。",
+    },
+    {
+      question: "当前 AI 回答为什么不是自由发挥？",
+      answer:
+        "因为链路先做风险预检和意图路由，再按知识优先级取证据，最后才调用模型生成回答，模型不是唯一决策者。",
+    },
+    {
+      question: "这套系统现在最适合拿来展示什么？",
+      answer:
+        "最适合展示首页稳态闭环、关怀场景分流、医疗支持承接、伴侣同步协作，以及带引用的 AI 问答能力。",
+    },
+  ],
+  delivery: {
+    note:
+      "本页适合产品演示与内部讲解；完整对外交付底稿请配合仓库里的 `docs/app-current-system-guide.md` 一起使用。",
   },
   nextSteps: [
     "演示时优先按“首页打卡 -> 关怀一条行动 -> 医疗支持风险评估 -> 伴侣同步中心 -> AI 助手问答”的顺序走完整闭环。",
