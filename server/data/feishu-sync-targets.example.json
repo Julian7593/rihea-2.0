@@ -1,0 +1,34 @@
+[
+  {
+    "knowledgeId": "PROD-001",
+    "title": "AI 助手简介与回答边界",
+    "domain": "product",
+    "applicability": ["pregnancy"],
+    "severity": "normal",
+    "docType": "docx",
+    "documentId": "doccnxxxxxxxxxxxxxxxxxxxxxx",
+    "scopeId": "product_intro",
+    "status": "active",
+    "version": 1,
+    "vectorId": "",
+    "owner": "owner@example.com",
+    "tags": ["ai简介", "回答边界", "产品能力"],
+    "sourceUrl": "https://your-domain.feishu.cn/docx/doccnxxxxxxxxxxxxxxxxxxxxxx"
+  },
+  {
+    "knowledgeId": "SLP-001",
+    "title": "孕期睡眠支持知识卡",
+    "domain": "sleep",
+    "applicability": ["pregnancy"],
+    "severity": "normal",
+    "docType": "docx",
+    "documentId": "doccn_sleep_example_xxxxxxxx",
+    "scopeId": "pregnancy_sleep",
+    "status": "active",
+    "version": 1,
+    "vectorId": "",
+    "owner": "owner@example.com",
+    "tags": ["睡眠", "夜醒", "孕期"],
+    "sourceUrl": "https://your-domain.feishu.cn/docx/doccn_sleep_example_xxxxxxxx"
+  }
+]

@@ -1,0 +1,44 @@
+[
+  {
+    "document_id": "notion__help_center__sleep_routine",
+    "tenant_id": "rihea-default",
+    "source_type": "notion",
+    "source_id": "help_center_sleep_routine",
+    "source_url": "https://www.notion.so/example/help-center-sleep-routine",
+    "title": "帮助中心：孕期夜醒后的 10 分钟安抚流程",
+    "summary": "适用于夜醒、浅睡、入睡前焦虑的帮助中心文章。",
+    "body_markdown": "先做 3 轮慢呼吸，然后记录一个触发点和一个今晚可执行的小动作。若同时出现明显身体不适，需要转线下医疗评估。",
+    "language": "zh",
+    "tags": ["help-center", "sleep", "faq"],
+    "section_path": ["help-center", "sleep"],
+    "acl_principals": ["public"],
+    "connector_type": "notion",
+    "connector_id": "notion_api",
+    "sync_mode": "manual_push",
+    "metadata": {
+      "owner_team": "care-content",
+      "status": "published"
+    }
+  },
+  {
+    "document_id": "confluence__ops__acl_sync",
+    "tenant_id": "tenant-enterprise-a",
+    "source_type": "confluence",
+    "source_id": "acl_sync_playbook",
+    "source_url": "https://company.atlassian.net/wiki/spaces/OPS/pages/123456/ACL+Sync+Playbook",
+    "title": "ACL 同步作业手册",
+    "summary": "企业租户内部可见的 ACL 投影和回补流程。",
+    "body_text": "每次增量同步都需要把源系统用户、群组和页面权限映射成检索侧 principal。检索前必须基于 tenant_id 和 acl_principals 做过滤。",
+    "language": "zh",
+    "tags": ["ops", "acl", "enterprise"],
+    "section_path": ["ops", "acl"],
+    "acl_principals": ["tenant:tenant-enterprise-a", "group:ops-admin"],
+    "connector_type": "confluence",
+    "connector_id": "confluence_api",
+    "sync_mode": "manual_push",
+    "metadata": {
+      "owner_team": "platform-search",
+      "status": "internal"
+    }
+  }
+]

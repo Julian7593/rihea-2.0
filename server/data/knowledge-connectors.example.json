@@ -1,0 +1,26 @@
+[
+  {
+    "connector_id": "notion_api",
+    "connector_type": "notion",
+    "status": "planned",
+    "sync_mode": "webhook_plus_reconcile",
+    "ownership": "backend_connector",
+    "notes": "Use page/block sync, keep block ids for chunk-level provenance."
+  },
+  {
+    "connector_id": "confluence_api",
+    "connector_type": "confluence",
+    "status": "planned",
+    "sync_mode": "webhook_plus_reconcile",
+    "ownership": "backend_connector",
+    "notes": "Project page/content permissions to acl_principals before indexing."
+  },
+  {
+    "connector_id": "feishu_sync_snapshot",
+    "connector_type": "feishu",
+    "status": "configured",
+    "sync_mode": "scheduled_pull",
+    "ownership": "backend_connector",
+    "notes": "Current repo supports scheduled snapshots; next step is event subscription + reconciliation."
+  }
+]

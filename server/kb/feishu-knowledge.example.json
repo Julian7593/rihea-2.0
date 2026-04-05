@@ -1,0 +1,14 @@
+[
+  {
+    "id": "feishu_product_intro_001",
+    "title": "AI 助手简介与回答边界",
+    "summary": "本助手用于孕期与情绪健康场景，优先提供支持性信息、知识解释和应用功能引导，不替代医生诊断或治疗。",
+    "content": "AI 助手主要覆盖情绪支持、睡眠/饮食/运动建议、应用功能说明、内容推荐和风险升级提醒。遇到高风险表达时会优先走安全升级链路。",
+    "tags": ["ai简介", "回答边界", "产品能力"],
+    "scopeId": "product_intro",
+    "sourceUrl": "https://your-domain.feishu.cn/docx/doccnxxxxxxxxxxxxxxxxxxxxxx",
+    "updatedAt": "2026-04-04T08:00:00.000Z",
+    "accessScope": "configured_pages",
+    "documentId": "doccnxxxxxxxxxxxxxxxxxxxxxx"
+  }
+]

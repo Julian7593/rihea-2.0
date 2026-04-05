@@ -1,0 +1,243 @@
+export const weekLabels = ["一", "二", "三", "四", "五", "六", "日"];
+export const weekValues = [36, 63, 44, 72, 35, 57, 40];
+
+const careByLang = {
+  zh: [
+    {
+      id: "soothe",
+      label: "情绪安抚",
+      focusTag: "今日重点",
+      focusTitle: "3分钟让自己先稳下来",
+      focusDesc: "先把身体从紧绷拉回可控，再处理今天的烦心事。",
+      focusCta: "现在缓一缓",
+      quick: ["呼吸练习", "雨声白噪音", "紧急安抚卡"],
+      list: [
+        { title: "30秒先稳住", desc: "一句话安抚 + 三步动作，快速回到可控状态。", meta: "速用" },
+        { title: "今晚更容易睡着", desc: "关屏、呼吸、身体扫描，减少睡前反刍。", meta: "夜间" },
+        { title: "找到反复焦虑的根源", desc: "记录触发点，明天自动给出建议。", meta: "记录" },
+      ],
+    },
+    {
+      id: "body",
+      label: "身体照护",
+      focusTag: "身体状态",
+      focusTitle: "先看身体，避免情绪失控",
+      focusDesc: "从睡眠、疲劳、压力三项切入，先知道状态再安排今天节奏。",
+      focusCta: "看今天风险",
+      quick: ["睡眠打卡", "压力心率", "轻食建议"],
+      list: [
+        { title: "看懂昨晚睡眠影响", desc: "昨夜睡眠分级，自动生成趋势。", meta: "1分钟" },
+        { title: "识别今天压力是否超线", desc: "压力偏高时自动切换柔和提醒色。", meta: "实时" },
+        { title: "减少久坐带来的烦躁", desc: "久坐 60 分钟后温和提醒轻拉伸。", meta: "运动" },
+      ],
+    },
+    {
+      id: "partner",
+      label: "伴侣协同",
+      focusTag: "关系支持",
+      focusTitle: "让伴侣马上知道怎么帮你",
+      focusDesc: "减少沟通成本，直接给出可执行支持请求。",
+      focusCta: "一键发给伴侣",
+      quick: ["情绪同步卡", "今晚任务分配", "沟通模板"],
+      list: [
+        { title: "减少误解的同步卡", desc: "3 种状态 + 希望对方如何支持。", meta: "一键" },
+        { title: "今晚少争执的协作清单", desc: "家务、散步、放松陪伴自动拆分。", meta: "协作" },
+        { title: "每天获得一条支持", desc: "每天收到一条暖心支持语。", meta: "暖心" },
+      ],
+    },
+    {
+      id: "pro",
+      label: "专业支持",
+      focusTag: "临床连接",
+      focusTitle: "高压持续时，尽快有人接住你",
+      focusDesc: "当焦虑持续上升，优先连接专业人员获得结构化支持。",
+      focusCta: "查看可约时段",
+      quick: ["风险自评", "在线咨询", "危机联系"],
+      list: [
+        { title: "先判断风险等级", desc: "3 分钟完成焦虑风险等级评估。", meta: "评估" },
+        { title: "马上连到专业咨询", desc: "连接心理师，支持文字与语音。", meta: "咨询" },
+        { title: "看见自己正在变好", desc: "总结情绪波动与干预效果。", meta: "周报" },
+      ],
+    },
+  ],
+  en: [
+    {
+      id: "soothe",
+      label: "Calm",
+      focusTag: "Today",
+      focusTitle: "Steady yourself in 3 minutes",
+      focusDesc: "Bring your body back to control first, then handle today's stress.",
+      focusCta: "Calm now",
+      quick: ["Breathing", "Rain noise", "Rescue card"],
+      list: [
+        { title: "Stabilize in 30 seconds", desc: "One sentence + three actions for quick grounding.", meta: "Quick" },
+        { title: "Fall asleep easier tonight", desc: "Screen-off + breathing + body scan before sleep.", meta: "Night" },
+        { title: "Find your trigger pattern", desc: "Log triggers and get suggestions tomorrow.", meta: "Log" },
+      ],
+    },
+    {
+      id: "body",
+      label: "Body Care",
+      focusTag: "Body",
+      focusTitle: "Check body signals before overload",
+      focusDesc: "Review sleep, fatigue and stress first, then plan your day.",
+      focusCta: "See risk now",
+      quick: ["Sleep", "Stress HR", "Light meal"],
+      list: [
+        { title: "See how sleep affects today", desc: "Rate last night and build a trend.", meta: "1 min" },
+        { title: "Know if stress crossed the line", desc: "High stress switches to muted warning style.", meta: "Live" },
+        { title: "Reduce irritability from long sitting", desc: "Gentle stretch prompt after long sitting.", meta: "Move" },
+      ],
+    },
+    {
+      id: "partner",
+      label: "Partner",
+      focusTag: "Relationship",
+      focusTitle: "Help your partner support you faster",
+      focusDesc: "Share concrete support actions in one tap.",
+      focusCta: "Send now",
+      quick: ["Mood sync", "Task split", "Script"],
+      list: [
+        { title: "Prevent misunderstandings early", desc: "3 states + how your partner can help.", meta: "1 tap" },
+        { title: "Reduce evening conflicts", desc: "Auto split chores, walk and comfort time.", meta: "Plan" },
+        { title: "Get one warm support daily", desc: "Receive one warm support message every day.", meta: "Warm" },
+      ],
+    },
+    {
+      id: "pro",
+      label: "Professional",
+      focusTag: "Clinical Link",
+      focusTitle: "Get timely support when stress stays high",
+      focusDesc: "If anxiety keeps rising, connect with professionals early.",
+      focusCta: "Check slots",
+      quick: ["Risk check", "Consult", "Crisis help"],
+      list: [
+        { title: "Know your risk level first", desc: "Complete anxiety risk in 3 minutes.", meta: "Assess" },
+        { title: "Connect to a professional now", desc: "Connect with therapist by text or voice.", meta: "Consult" },
+        { title: "See your week getting better", desc: "Summary of mood shifts and intervention effect.", meta: "Weekly" },
+      ],
+    },
+  ],
+};
+
+const learnByLang = {
+  zh: [
+    {
+      id: "mind",
+      label: "心理认知",
+      focusTag: "核心文章",
+      focusTitle: "读完这篇，先减少自责和慌张",
+      focusDesc: "从激素变化、角色压力和不确定感三个维度理解焦虑来源。",
+      focusCta: "马上看",
+      quick: ["科学解释", "认知技巧", "沟通方法"],
+      list: [
+        { title: "情绪波动不是你脆弱", desc: "识别正常波动与预警边界。", meta: "8分钟" },
+        { title: "灾难化思维拆解", desc: "把担心拆成“证据-可能性-行动”。", meta: "6分钟" },
+        { title: "与家人沟通焦虑", desc: "表达需求而不是争吵的句式模板。", meta: "5分钟" },
+      ],
+    },
+    {
+      id: "science",
+      label: "医学科普",
+      focusTag: "本周专题",
+      focusTitle: "看懂睡眠和焦虑，今晚更好睡",
+      focusDesc: "睡眠会影响焦虑阈值，焦虑也会反过来影响睡眠。",
+      focusCta: "看图就懂",
+      quick: ["压力指标", "产检准备", "营养建议"],
+      list: [
+        { title: "心率压力指标怎么看", desc: "一个颜色系统快速判断压力区间。", meta: "图解" },
+        { title: "产检前焦虑准备单", desc: "检查前一天如何准备更安心。", meta: "清单" },
+        { title: "营养与情绪稳定", desc: "饮食如何帮助白天状态更稳。", meta: "科普" },
+      ],
+    },
+    {
+      id: "habit",
+      label: "日常练习",
+      focusTag: "可执行",
+      focusTitle: "每天10分钟，把状态慢慢拉稳",
+      focusDesc: "晨 3 分钟 + 午 2 分钟 + 夜 5 分钟，形成稳定闭环。",
+      focusCta: "今天就开始",
+      quick: ["90秒扫描", "步行呼吸", "睡前音频"],
+      list: [
+        { title: "90秒身体扫描", desc: "快速把注意力从脑内拉回身体。", meta: "90秒" },
+        { title: "步行呼吸法", desc: "散步时同步呼吸节奏，适合饭后。", meta: "轻运动" },
+        { title: "睡前放松音频", desc: "减少入睡前紧绷和反刍思维。", meta: "音频" },
+      ],
+    },
+    {
+      id: "faq",
+      label: "常见问题",
+      focusTag: "FAQ",
+      focusTitle: "先解开最常见的自我怀疑",
+      focusDesc: "很多孕期情绪变化是生理与心理共同作用，并不是你的错。",
+      focusCta: "立即查看",
+      quick: ["最坏结果", "伴侣不理解", "何时求助"],
+      list: [
+        { title: "总想最坏结果怎么办", desc: "三步法快速中断灾难化循环。", meta: "高频" },
+        { title: "伴侣不理解怎么办", desc: "先给对方明确、可执行的请求。", meta: "关系" },
+        { title: "何时需要专业帮助", desc: "持续影响睡眠和功能就应尽快求助。", meta: "指引" },
+      ],
+    },
+  ],
+  en: [
+    {
+      id: "mind",
+      label: "Mind",
+      focusTag: "Featured",
+      focusTitle: "Read this and feel less self-blame",
+      focusDesc: "Understand anxiety from hormones, role pressure, and uncertainty.",
+      focusCta: "Read now",
+      quick: ["Evidence", "Cognitive", "Communication"],
+      list: [
+        { title: "Mood swings are not weakness", desc: "See the line between normal shifts and warning signs.", meta: "8 min" },
+        { title: "Break catastrophic thinking", desc: "Use evidence-probability-action to reset thoughts.", meta: "6 min" },
+        { title: "Talk with family better", desc: "Sentence templates for expressing needs clearly.", meta: "5 min" },
+      ],
+    },
+    {
+      id: "science",
+      label: "Science",
+      focusTag: "This Week",
+      focusTitle: "Understand sleep-anxiety, sleep better tonight",
+      focusDesc: "Sleep changes anxiety threshold, and anxiety affects sleep in return.",
+      focusCta: "See visual guide",
+      quick: ["Metric", "Checklist", "Nutrition"],
+      list: [
+        { title: "How to read stress heart-rate", desc: "Use a color model to identify stress zones quickly.", meta: "Guide" },
+        { title: "Before-checkup anxiety list", desc: "Prepare one day before for more control.", meta: "List" },
+        { title: "Nutrition and mood stability", desc: "Food structure that supports daytime steadiness.", meta: "Science" },
+      ],
+    },
+    {
+      id: "habit",
+      label: "Practice",
+      focusTag: "Actionable",
+      focusTitle: "10 minutes daily to regain steadiness",
+      focusDesc: "3 mins morning + 2 mins noon + 5 mins night routine.",
+      focusCta: "Start today",
+      quick: ["90-sec scan", "Walk-breath", "Sleep audio"],
+      list: [
+        { title: "90-sec body scan", desc: "Bring focus back to body signals quickly.", meta: "90 sec" },
+        { title: "Walk-breath rhythm", desc: "Sync your steps with breathing after meals.", meta: "Light move" },
+        { title: "Sleep wind-down audio", desc: "Reduce late-night tension and rumination.", meta: "Audio" },
+      ],
+    },
+    {
+      id: "faq",
+      label: "FAQ",
+      focusTag: "Common Qs",
+      focusTitle: "Clear your most common self-doubts first",
+      focusDesc: "Most mood changes in pregnancy are physiological and psychological together.",
+      focusCta: "View now",
+      quick: ["Worst-case loop", "Partner issue", "Seek help"],
+      list: [
+        { title: "What if I expect the worst", desc: "Use a 3-step method to stop catastrophic loops.", meta: "Frequent" },
+        { title: "What if partner doesn't get it", desc: "Ask with specific and actionable support requests.", meta: "Relationship" },
+        { title: "When to seek professional help", desc: "Seek early if sleep and function are affected.", meta: "Guide" },
+      ],
+    },
+  ],
+};
+
+export const getCareCategories = (lang) => careByLang[lang] || careByLang.zh;
+export const getLearnCategories = (lang) => learnByLang[lang] || learnByLang.zh;

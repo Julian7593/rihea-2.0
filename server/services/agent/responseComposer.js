@@ -1,0 +1,48 @@
+import { AGENT_RISK_LEVEL } from "./constants.js";
+
+export function composeAgentResponse({
+  answer,
+  answerRaw = null,
+  riskLevel,
+  disclaimer,
+  nextActions = [],
+  escalation = null,
+  classification = null,
+  routing = null,
+  toolTrace = [],
+  reasoningSummary = null,
+  sources = [],
+  citations = [],
+  usedSources = [],
+  groundingSummary = null,
+  kbFreshness = null,
+  confidence = null,
+  fallbackReason = null,
+  relatedQuestionCards = [],
+  searchMeta = null,
+  memoryUpdates = {},
+}) {
+  const normalizedAnswer = String(answer || "").trim();
+  return {
+    answer: normalizedAnswer,
+    answer_raw: String(answerRaw || normalizedAnswer).trim(),
+    riskLevel: riskLevel || AGENT_RISK_LEVEL.R0,
+    disclaimer: String(disclaimer || "").trim(),
+    nextActions: Array.isArray(nextActions) ? nextActions : [],
+    escalation: escalation || null,
+    classification: classification || null,
+    routing: routing || null,
+    toolTrace: Array.isArray(toolTrace) ? toolTrace : [],
+    reasoning_summary: reasoningSummary || null,
+    sources: Array.isArray(sources) ? sources : [],
+    citations: Array.isArray(citations) ? citations : [],
+    usedSources: Array.isArray(usedSources) ? usedSources : [],
+    groundingSummary: groundingSummary || null,
+    kbFreshness: kbFreshness || null,
+    confidence: Number.isFinite(Number(confidence)) ? Number(confidence) : null,
+    fallbackReason: fallbackReason || null,
+    relatedQuestionCards: Array.isArray(relatedQuestionCards) ? relatedQuestionCards : [],
+    search_meta: searchMeta || null,
+    memoryUpdates: memoryUpdates || {},
+  };
+}
